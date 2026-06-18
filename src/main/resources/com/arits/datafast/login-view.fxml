@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+<BorderPane xmlns:fx="http://fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="com.arits.datafast.controller.LoginController"
+            stylesheets="@style/application.css"
+            prefHeight="700.0" prefWidth="900.0"
+            styleClass="main-root">
+
+    <top>
+        <fx:include source="components/header-view.fxml"/>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="24.0" styleClass="login-background">
+            <padding>
+                <Insets top="20" bottom="40" left="20" right="20"/>
+            </padding>
+
+            <VBox styleClass="login-card" maxWidth="420.0" spacing="20.0" alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="36" right="36" bottom="36" left="36"/>
+                </padding>
+
+                <VBox spacing="6.0" alignment="CENTER">
+                    <Label text="Welcome back" styleClass="card-main-heading"/>
+                    <Label text="Sign in to your DataFast account to continue" styleClass="card-sub-heading"/>
+                </VBox>
+<!--input fields-->
+                <VBox spacing="16.0" alignment="TOP_LEFT">
+                    <VBox spacing="6.0">
+                        <Label text="Email" styleClass="input-field-label"/>
+                        <HBox styleClass="custom-input-field" alignment="CENTER_LEFT" spacing="10.0">
+                            <FontIcon iconLiteral="gmi-email" iconSize="16" styleClass="input-icon"/>
+                            <TextField fx:id="emailField" promptText="you@company.com"
+                                       styleClass="input-field-inner" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                    </VBox>
+                    <VBox spacing="6.0">
+                        <Label text="Password" styleClass="input-field-label"/>
+                        <HBox styleClass="custom-input-field" alignment="CENTER_LEFT" spacing="10.0">
+                            <FontIcon iconLiteral="gmi-lock" iconSize="16" styleClass="input-icon"/>
+                            <StackPane HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
+                                <PasswordField fx:id="passwordField" promptText="Enter your password"
+                                               styleClass="input-field-inner"/>
+                                <TextField fx:id="passwordVisibleField" promptText="Enter your password"
+                                           styleClass="input-field-inner" visible="false" managed="false"/>
+                            </StackPane>
+                            <FontIcon fx:id="passwordToggleIcon" iconLiteral="gmi-visibility-off"
+                                      iconSize="16" styleClass="input-icon" onMouseClicked="#handlePasswordToggle"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+                <Button fx:id="loginButton" text=" Login" maxWidth="Infinity" onAction="#handleLogin" styleClass="primary-login-btn">
+                    <graphic>
+                        <FontIcon iconLiteral="fth-log-in" iconSize="16" iconColor="WHITE"/>
+                    </graphic>
+                </Button>
+                <Hyperlink text="Forgot password?" styleClass="forgot-password-link"/>
+
+                <Label fx:id="errorLabel" styleClass="error-message-label" wrapText="true" managed="false"
+                       visible="false"/>
+            </VBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <fx:include source="components/footer-view.fxml"/>
+    </bottom>
+
+</BorderPane>

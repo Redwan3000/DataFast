@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.SVGPath?>
+<HBox alignment="CENTER" spacing="10.0" styleClass="brand-header-container">
+
+    <StackPane styleClass="logo-icon-box">
+        <SVGPath content="M4 6l6 6-6 6 M12 6l6 6-6 6"
+                 styleClass="logo-svg-vector"/>
+    </StackPane>
+
+    <HBox alignment="CENTER">
+        <Label text="Data" styleClass="brand-text-dark"/>
+        <Label text="Fast" styleClass="brand-text-blue"/>
+    </HBox>
+
+</HBox>
