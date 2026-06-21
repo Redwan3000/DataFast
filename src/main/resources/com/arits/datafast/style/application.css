@@ -54,7 +54,6 @@
 
 .custom-input-field:focused {
     -fx-border-color: #0284c7; /* Sky blue/teal accent on focus state */
-    -fx-effect: Henry; /* Optional focus ring can be simulated here if needed */
 }
 
 /* Interactive Components Call-to-Actions */
@@ -165,3 +164,10 @@
 .login-background{
     -fx-background-color: #f1f3f3;
 }
+
+
+/* Add this to give all inputs in the reset form uniform spacing */
+.reset-input-wrapper {
+    -fx-spacing: 8px;
+}
+

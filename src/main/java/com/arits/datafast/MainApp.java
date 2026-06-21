@@ -1,36 +1,34 @@
 package com.arits.datafast;
 
+import com.arits.datafast.config.AppConfig;
 import com.arits.datafast.routing.SceneRouter;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
     public static void main(String[] args) {
+        // This is the standard Java entry point that launches the JavaFX Application thread
         launch(args);
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        // Register stage with router before loading any FXML
-        SceneRouter.init(stage);
+    public void start(Stage primaryStage) {
+        // 1. Wake up the configuration vault first so environment variables are ready
+        AppConfig.getInstance();
 
-        FXMLLoader loader = new FXMLLoader(
-                MainApp.class.getResource("login-view.fxml")
-        );
-        Parent root = loader.load();
+        // 2. Give the SceneRouter control of the main window
+        SceneRouter.init(primaryStage);
 
-        // One Scene for the lifetime of the app — root node swapped on navigation
-        Scene scene = new Scene(root, 500, 400);
-        scene.getStylesheets().add(
-                MainApp.class.getResource("application.css").toExternalForm()
-        );
+        // 3. Configure your OS window settings
+        primaryStage.setTitle("DataFast Automation");
+        primaryStage.setMinWidth(900);
+        primaryStage.setMinHeight(700);
 
-        stage.setTitle("DataFast");
-        stage.setScene(scene);
-        stage.show();
+        // 4. Fire up the first view
+        SceneRouter.navigateTo("/auth/login-view.fxml");
+
+        // 5. Show the window on the screen
+        primaryStage.show();
     }
 }

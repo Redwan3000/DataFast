@@ -9,8 +9,8 @@
 <VBox xmlns:fx="http://javafx.com/fxml"
       spacing="20.0"
       xmlns="http://javafx.com/javafx"
-      fx:controller="com.arits.datafast.controller.DashboardController"
-      stylesheets="@style/application.css">
+      fx:controller="com.arits.datafast.controller.dashboard.DashboardController"
+      stylesheets="@../../style/application.css">
 
     <padding>
         <Insets top="24" right="24" bottom="24" left="24"/>

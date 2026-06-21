@@ -14,7 +14,14 @@ import com.arits.datafast.browser.BrowserManager;
 public class AppState {
 
     private static volatile AppState instance;
-
+    private volatile String authToken;
+    private volatile String userJson;
+    private volatile String userName;
+    private volatile String userEmail;
+    private volatile boolean loggedIn = false;
+    private String tempEmail; // New field for password reset flow
+    /** Live browser session — opened after login, closed on logout. */
+    private volatile BrowserManager.BrowserSession browserSession;
     private AppState() {}
 
     public static AppState getInstance() {
@@ -28,16 +35,10 @@ public class AppState {
         return instance;
     }
 
-    // --- Session fields ---
+    public String getTempEmail() { return tempEmail; }
 
-    private volatile String authToken;
-    private volatile String userJson;
-    private volatile String userName;
-    private volatile String userEmail;
-    private volatile boolean loggedIn = false;
+    public void setTempEmail(String email) { this.tempEmail = email; }
 
-    /** Live browser session — opened after login, closed on logout. */
-    private volatile BrowserManager.BrowserSession browserSession;
 
     // --- Setters ---
 
@@ -50,18 +51,23 @@ public class AppState {
         this.loggedIn  = true;
     }
 
-    public void setBrowserSession(BrowserManager.BrowserSession browserSession) {
-        this.browserSession = browserSession;
-    }
+    public String getAuthToken()  { return authToken; }
 
     // --- Getters ---
 
-    public String getAuthToken()  { return authToken; }
     public String getUserJson()   { return userJson; }
+
     public String getUserName()   { return userName; }
+
     public String getUserEmail()  { return userEmail; }
+
     public boolean isLoggedIn()   { return loggedIn; }
+
     public BrowserManager.BrowserSession getBrowserSession() { return browserSession; }
+
+    public void setBrowserSession(BrowserManager.BrowserSession browserSession) {
+        this.browserSession = browserSession;
+    }
 
     // --- Logout ---
 
@@ -78,6 +84,7 @@ public class AppState {
         userName  = null;
         userEmail = null;
         loggedIn  = false;
+        tempEmail = null;
     }
 
     @Override

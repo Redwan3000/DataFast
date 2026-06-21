@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.HBox?>
 <BorderPane xmlns:fx="http://fxml"
             xmlns="http://javafx.com/javafx"
-            fx:controller="com.arits.datafast.controller.LoginController"
-            stylesheets="@style/application.css"
+            fx:controller="com.arits.datafast.controller.auth.LoginController"
+            stylesheets="@../../style/application.css"
             prefHeight="700.0" prefWidth="900.0"
             styleClass="main-root">
 
     <top>
-        <fx:include source="components/header-view.fxml"/>
+        <fx:include source="../../components/header-view.fxml"/>
     </top>
 
     <center>
@@ -69,7 +69,9 @@
                         <FontIcon iconLiteral="fth-log-in" iconSize="16" iconColor="WHITE"/>
                     </graphic>
                 </Button>
-                <Hyperlink text="Forgot password?" styleClass="forgot-password-link"/>
+                <Hyperlink text="Forgot password?"
+                           onAction="#handleForgotPassword"
+                           styleClass="forgot-password-link"/>
 
                 <Label fx:id="errorLabel" styleClass="error-message-label" wrapText="true" managed="false"
                        visible="false"/>
@@ -78,7 +80,7 @@
     </center>
 
     <bottom>
-        <fx:include source="components/footer-view.fxml"/>
+        <fx:include source="../../components/footer-view.fxml"/>
     </bottom>
 
 </BorderPane>
