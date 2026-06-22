@@ -95,12 +95,33 @@
     -fx-font-weight: 700;
 }
 
-/* Error UI State Notification Labels */
 .error-message-label {
+    -fx-background-color: #fef2f2;
+    -fx-border-color: #fecaca;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-text-fill: #dc2626;
+    -fx-padding: 10 14 10 14;
+    -fx-font-size: 13px;
+    -fx-max-width: Infinity;
+}
+.error-message-label {
+    -fx-background-color: #fef2f2;
+    -fx-border-color: #fecaca;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14 10 14;
+    -fx-max-width: Infinity;
+}
+
+.error-banner-icon {
+    -fx-icon-color: #dc2626;
+}
+
+.error-banner-text {
     -fx-text-fill: #dc2626;
     -fx-font-size: 13px;
 }
-
 /* The Blue Icon Container Square */
 .logo-icon-box {
     -fx-background-color: #0066ff; /* Corporate Accent Blue */
@@ -156,8 +177,7 @@
 }
 
 .brand-header-container {
-    /* Gives the logo breathing room from the top edge of the desktop window */
-    -fx-padding: 20px 0px;
+    -fx-padding: 16px 24px;
     -fx-background-color: #FFFFFF;
 }
 
@@ -171,3 +191,252 @@
     -fx-spacing: 8px;
 }
 
+/* Navbar */
+.navbar {
+    -fx-background-color: #f1f3f3;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+    -fx-min-height: 50px;
+
+}
+.navbar-back-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 6;
+}
+.navbar-back-btn:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 6;
+}
+.navbar-brand {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: none;
+}
+.navbar-icon {
+    -fx-icon-color: #374151;
+}
+
+/* OTP boxes */
+.otp-box {
+    -fx-alignment: CENTER;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-border-width: 1.5;
+}
+.otp-box:focused {
+    -fx-border-color: #0d9488;
+}
+
+/* OTP lock icon circle */
+.otp-icon-circle {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 50;
+    -fx-padding: 16;
+}
+.otp-lock-icon {
+    -fx-icon-color: #374151;
+}
+
+/* Password requirements */
+.password-requirements-box {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 14;
+}
+.requirements-heading {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #374151;
+}
+.req-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6b7280;
+}
+.req-icon-pass {
+    -fx-icon-color: #16a34a;
+}
+.req-icon-fail {
+    -fx-icon-color: #9ca3af;
+}
+
+/* Resend link */
+.resend-link {
+    -fx-text-fill: #0d9488;
+    -fx-font-size: 13px;
+}
+
+
+/* =============================================================================
+   DASHBOARD — Page scaffold
+   ============================================================================= */
+
+.dashboard-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: #EBEBEB;
+}
+
+.dashboard-scroll-pane > .viewport {
+    -fx-background-color: #EBEBEB;
+}
+
+.dashboard-content {
+    -fx-background-color: #EBEBEB;
+}
+
+/* =============================================================================
+   DASHBOARD — Section heading ("All Portals")
+   ============================================================================= */
+
+.section-heading {
+    -fx-font-size: 13px;
+    -fx-font-weight: normal;
+    -fx-text-fill: #888888;
+    -fx-font-family: "System";
+}
+
+/* =============================================================================
+   DASHBOARD — Module card grid (FlowPane)
+   ============================================================================= */
+
+.module-grid {
+    -fx-background-color: transparent;
+    -fx-pref-wrap-length: 800;
+}
+
+/* =============================================================================
+   MODULE CARD — Container
+   ============================================================================= */
+
+.module-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+    -fx-pref-width: 260;
+    -fx-min-width: 220;
+    -fx-max-width: 300;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 6, 0, 0, 2);
+}
+
+/* =============================================================================
+   MODULE CARD — Header (module name row)
+   ============================================================================= */
+
+.module-card-header {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10 10 0 0;
+}
+
+.module-card-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1A1A1A;
+}
+
+/* =============================================================================
+   MODULE CARD — Divider line between header and sub-modules
+   ============================================================================= */
+
+.module-card-divider {
+    -fx-background-color: #EEEEEE;
+    -fx-min-height: 1;
+    -fx-max-height: 1;
+    -fx-pref-height: 1;
+}
+
+/* =============================================================================
+   MODULE CARD — Sub-module container
+   ============================================================================= */
+
+.sub-module-container {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 0 0 10 10;
+}
+
+/* =============================================================================
+   SUB-MODULE ROW — Default state
+   ============================================================================= */
+
+.sub-module-row {
+    -fx-background-color: #FFFFFF;
+    -fx-cursor: hand;
+    -fx-pref-height: 44;
+    -fx-min-height: 44;
+    -fx-border-color: transparent transparent #F5F5F5 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Last child — no bottom border so it doesn't clash with card border-radius */
+.sub-module-container > .sub-module-row:last-child {
+    -fx-border-color: transparent;
+    -fx-background-radius: 0 0 10 10;
+}
+
+.sub-module-name {
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+}
+
+/* =============================================================================
+   SUB-MODULE ROW — Hover state
+   ============================================================================= */
+
+.sub-module-row-hover {
+    -fx-background-color: #F5F5F5;
+}
+
+/* =============================================================================
+   SUB-MODULE ROW — Selected / active state  (teal — matching your screenshot)
+   ============================================================================= */
+
+.sub-module-row-selected {
+    -fx-background-color: #1A9F8A;
+}
+
+.sub-module-row-selected .sub-module-name {
+    -fx-text-fill: #FFFFFF;
+}
+
+.sub-module-row-selected .sub-module-arrow {
+    -fx-icon-color: #FFFFFF;
+}
+
+/* =============================================================================
+   SUB-MODULE ROW — Arrow icon (chevron right)
+   ============================================================================= */
+
+.sub-module-arrow {
+    -fx-icon-color: #AAAAAA;
+}
+
+/* =============================================================================
+   SUB-MODULE ROW — Empty state label
+   ============================================================================= */
+
+.sub-module-empty {
+    -fx-font-size: 12px;
+    -fx-text-fill: #AAAAAA;
+    -fx-font-style: italic;
+}
+
+/* =============================================================================
+   LOADING STATE
+   ============================================================================= */
+
+.loading-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #888888;
+}
+
+.loading-spinner-icon {
+    -fx-icon-color: #888888;
+}

@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.shape.SVGPath?>
-<HBox alignment="CENTER" spacing="10.0" styleClass="brand-header-container">
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns:fx="http://fxml"
+      fx:controller="com.arits.datafast.controller.components.HeaderController"
+      alignment="CENTER_LEFT"
+      spacing="10.0"
+ fx:id="root"
+      styleClass="brand-header-container">
+    <padding>
+        <Insets top="16" bottom="16" left="24" right="24"/>
+    </padding>
 
     <StackPane styleClass="logo-icon-box">
         <SVGPath content="M4 6l6 6-6 6 M12 6l6 6-6 6"
                  styleClass="logo-svg-vector"/>
     </StackPane>
-
     <HBox alignment="CENTER">
         <Label text="Data" styleClass="brand-text-dark"/>
         <Label text="Fast" styleClass="brand-text-blue"/>
     </HBox>
 
+    <!-- Spacer pushes the toggle to the far right -->
+    <HBox HBox.hgrow="ALWAYS"/>
+
+    <FontIcon fx:id="themeIcon" iconLiteral="gmi-wb-sunny" iconSize="20"
+              styleClass="navbar-icon" onMouseClicked="#handleThemeToggle"/>
 </HBox>

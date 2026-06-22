@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns:fx="http://fxml"
+      fx:controller="com.arits.datafast.controller.components.NavbarController"
+      styleClass="navbar"
+      fx:id="root"
+      alignment="CENTER_LEFT"
+      spacing="8.0"
+>
+
+    <padding>
+        <Insets top="12" bottom="12" left="24" right="24"/>
+    </padding>
+
+    <Button onAction="#handleHome" styleClass="navbar-back-btn">
+        <graphic><FontIcon iconLiteral="gmi-home" iconSize="18" styleClass="navbar-icon"/></graphic>
+    </Button>
+
+    <Button fx:id="backBtn" onAction="#handleBack" styleClass="navbar-back-btn">
+        <graphic><FontIcon iconLiteral="gmi-arrow-back" iconSize="18" styleClass="navbar-icon"/></graphic>
+    </Button>
+
+    <Button fx:id="forwardBtn" onAction="#handleForward" styleClass="navbar-back-btn">
+        <graphic><FontIcon iconLiteral="gmi-arrow-forward" iconSize="18" styleClass="navbar-icon"/></graphic>
+    </Button>
+
+    <Button onAction="#handleRefresh" styleClass="navbar-back-btn">
+        <graphic><FontIcon iconLiteral="gmi-refresh" iconSize="18" styleClass="navbar-icon"/></graphic>
+    </Button>
+    <Button onAction="#handleLogout" styleClass="navbar-back-btn">
+        <graphic><FontIcon iconLiteral="gmi-exit-to-app" iconSize="18" styleClass="navbar-icon"/></graphic>
+    </Button>
+
+
+
+</HBox>

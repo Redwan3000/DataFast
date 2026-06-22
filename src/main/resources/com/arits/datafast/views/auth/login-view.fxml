@@ -12,6 +12,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.HBox?>
+
+
 <BorderPane xmlns:fx="http://fxml"
             xmlns="http://javafx.com/javafx"
             fx:controller="com.arits.datafast.controller.auth.LoginController"
@@ -19,17 +21,18 @@
             prefHeight="700.0" prefWidth="900.0"
             styleClass="main-root">
 
+
     <top>
         <fx:include source="../../components/header-view.fxml"/>
     </top>
+
 
     <center>
         <VBox alignment="CENTER" spacing="24.0" styleClass="login-background">
             <padding>
                 <Insets top="20" bottom="40" left="20" right="20"/>
             </padding>
-
-            <VBox styleClass="login-card" maxWidth="420.0" spacing="20.0" alignment="TOP_CENTER">
+            <VBox styleClass="login-card" maxWidth="420.0" spacing="20.0" alignment="CENTER">
                 <padding>
                     <Insets top="36" right="36" bottom="36" left="36"/>
                 </padding>
@@ -38,6 +41,13 @@
                     <Label text="Welcome back" styleClass="card-main-heading"/>
                     <Label text="Sign in to your DataFast account to continue" styleClass="card-sub-heading"/>
                 </VBox>
+
+                <!-- Replace your errorLabel with this -->
+                <HBox fx:id="errorBanner" styleClass="error-message-label" alignment="CENTER_LEFT"
+                      spacing="8.0" managed="false" visible="false">
+                    <FontIcon iconLiteral="gmi-error" iconSize="16" styleClass="error-banner-icon"/>
+                    <Label fx:id="errorLabel" styleClass="error-banner-text" wrapText="true"/>
+                </HBox>
 <!--input fields-->
                 <VBox spacing="16.0" alignment="TOP_LEFT">
                     <VBox spacing="6.0">
@@ -45,7 +55,7 @@
                         <HBox styleClass="custom-input-field" alignment="CENTER_LEFT" spacing="10.0">
                             <FontIcon iconLiteral="gmi-email" iconSize="16" styleClass="input-icon"/>
                             <TextField fx:id="emailField" promptText="you@company.com"
-                                       styleClass="input-field-inner" HBox.hgrow="ALWAYS"/>
+                                       styleClass="input-field-inner" />
                         </HBox>
                     </VBox>
                     <VBox spacing="6.0">
@@ -53,7 +63,7 @@
                         <HBox styleClass="custom-input-field" alignment="CENTER_LEFT" spacing="10.0">
                             <FontIcon iconLiteral="gmi-lock" iconSize="16" styleClass="input-icon"/>
                             <StackPane HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
-                                <PasswordField fx:id="passwordField" promptText="Enter your password"
+                                <PasswordField fx:id="passwordHiddenField" promptText="Enter your password"
                                                styleClass="input-field-inner"/>
                                 <TextField fx:id="passwordVisibleField" promptText="Enter your password"
                                            styleClass="input-field-inner" visible="false" managed="false"/>
@@ -73,11 +83,11 @@
                            onAction="#handleForgotPassword"
                            styleClass="forgot-password-link"/>
 
-                <Label fx:id="errorLabel" styleClass="error-message-label" wrapText="true" managed="false"
-                       visible="false"/>
+
             </VBox>
         </VBox>
     </center>
+
 
     <bottom>
         <fx:include source="../../components/footer-view.fxml"/>

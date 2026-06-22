@@ -6,18 +6,56 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class SceneRouter {
 
+    private static final Deque<String> backStack = new ArrayDeque<>();
+    private static final Deque<String> forwardStack = new ArrayDeque<>();
+    private static String currentPath;
     private static Stage primaryStage;
 
     public static void init(Stage stage) {
         primaryStage = stage;
     }
 
+    /** Normal forward navigation (clicking a button/link). Clears forward history. */
     public static void navigateTo(String fxmlPath) {
+        if (currentPath != null) {
+            backStack.push(currentPath);
+        }
+        forwardStack.clear();
+        currentPath = fxmlPath;
+        load(fxmlPath);
+    }
+
+    public static void navigateBack() {
+        if (backStack.isEmpty()) return;
+        forwardStack.push(currentPath);
+        currentPath = backStack.pop();
+        load(currentPath);
+    }
+
+    public static void navigateForward() {
+        if (forwardStack.isEmpty()) return;
+        backStack.push(currentPath);
+        currentPath = forwardStack.pop();
+        load(currentPath);
+    }
+
+    /** Reloads the current view as-is, without touching history. */
+    public static void refresh() {
+        if (currentPath != null) {
+            load(currentPath);
+        }
+    }
+
+    public static boolean canGoBack()    { return !backStack.isEmpty(); }
+    public static boolean canGoForward() { return !forwardStack.isEmpty(); }
+
+    private static void load(String fxmlPath) {
         try {
-            // Ensure path starts with /com/arits/datafast/views
             String fullPath = fxmlPath.startsWith("/com/arits/datafast/views")
                     ? fxmlPath
                     : "/com/arits/datafast/views" + fxmlPath;
@@ -35,6 +73,8 @@ public class SceneRouter {
             } else {
                 primaryStage.getScene().setRoot(root);
             }
+
+            com.arits.datafast.theme.ThemeManager.applyToRoot(root);
         } catch (Exception e) {
             System.err.println("Router Error: " + e.getMessage());
             e.printStackTrace();

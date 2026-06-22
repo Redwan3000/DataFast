@@ -8,29 +8,31 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class LoginController {
 
     private final AuthService authService = new AuthService();
     @FXML private TextField emailField;
-    @FXML private PasswordField passwordField;
+    @FXML private PasswordField passwordHiddenField;
     @FXML private TextField passwordVisibleField;
     @FXML private FontIcon passwordToggleIcon;
     @FXML private Button loginButton;
+    @FXML private HBox errorBanner;
     @FXML private Label errorLabel;
     private boolean passwordVisible = false;
 
     @FXML
     public void initialize() {
-        passwordVisibleField.textProperty().bindBidirectional(passwordField.textProperty());
+        passwordVisibleField.textProperty().bindBidirectional(passwordHiddenField.textProperty());
     }
 
     @FXML
     private void handlePasswordToggle() {
         passwordVisible = !passwordVisible;
-        passwordField.setVisible(!passwordVisible);
-        passwordField.setManaged(!passwordVisible);
+        passwordHiddenField.setVisible(!passwordVisible);
+        passwordHiddenField.setManaged(!passwordVisible);
         passwordVisibleField.setVisible(passwordVisible);
         passwordVisibleField.setManaged(passwordVisible);
         passwordToggleIcon.setIconLiteral(passwordVisible ? "gmi-visibility" : "gmi-visibility-off");
@@ -38,60 +40,68 @@ public class LoginController {
 
     @FXML
     private void handleLogin() {
-        String email = emailField.getText().trim();
-        String password = passwordField.isVisible() ? passwordField.getText() : passwordVisibleField.getText();
+        String email    = emailField.getText().trim();
+        String password = passwordHiddenField.getText();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            showError("Please enter your email and password.");
+        if (email.isEmpty()) {
+            showError("Please enter your email address.");
+            return;
+        }
+        if (!isValidEmail(email)) {
+            showError("Please enter a valid email address.");
+            return;
+        }
+        if (password.isEmpty()) {
+            showError("Please enter your password.");
             return;
         }
 
-        setFormEnabled(false);
-        clearError();
+        hideError();
 
-        // Run network call on background thread so the UI doesn't freeze
-        Thread loginThread = new Thread(() -> {
+        new Thread(() -> {
+            Platform.runLater(() -> setFormEnabled(false));
             try {
-                // Controller just delegates to the Service
-                authService.authenticate(email, password);
-
-                // If no exception was thrown, we succeed and navigate
+                authService.authenticateUser(email, password);
                 Platform.runLater(() -> SceneRouter.navigateTo("/dashboard/dashboard-view.fxml"));
-
             } catch (Exception e) {
-                Platform.runLater(() -> {
-                    showError(e.getMessage());
-                    setFormEnabled(true);
-                });
+                Platform.runLater(() -> setFormEnabled(true));
+                showError(e.getMessage());
             }
-        }, "login-thread");
-
-        loginThread.setDaemon(true);
-        loginThread.start();
+        }).start();
     }
 
+    
     private void showError(String message) {
-        errorLabel.setVisible(true);
-        errorLabel.setManaged(true);
-        errorLabel.setText(message);
+        Platform.runLater(() -> {
+            errorLabel.setText(message);
+            errorBanner.setVisible(true);
+            errorBanner.setManaged(true);
+        });
     }
 
-    private void clearError() {
-        errorLabel.setVisible(false);
-        errorLabel.setManaged(false);
-        errorLabel.setText("");
+    private void hideError() {
+        Platform.runLater(() -> {
+            errorBanner.setVisible(false);
+            errorBanner.setManaged(false);
+        });
     }
+
+    private boolean isValidEmail(String email) {
+        return email.matches("^[\\w._%+\\-]+@[\\w.\\-]+\\.[a-zA-Z]{2,}$");
+    }
+
 
     private void setFormEnabled(boolean enabled) {
         emailField.setDisable(!enabled);
-        passwordField.setDisable(!enabled);
+        passwordHiddenField.setDisable(!enabled);
         passwordVisibleField.setDisable(!enabled);
         loginButton.setDisable(!enabled);
         loginButton.setText(enabled ? " Login" : " Authenticating...");
     }
+
+//    method to redirect forget password page
     @FXML
     private void handleForgotPassword() {
-        // This triggers the router to switch to your forgot password screen
         SceneRouter.navigateTo("/auth/forget-password-view.fxml");
     }
 }

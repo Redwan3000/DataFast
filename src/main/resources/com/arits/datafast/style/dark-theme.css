@@ -1,0 +1,128 @@
+/* Core Layout Container Environments */
+.main-root {
+    -fx-background-color: #22272b; /* Matte charcoal slate background */
+}
+.login-background {
+    -fx-background-color: #22272b;
+}
+
+
+.brand-header-container {
+    -fx-background-color: #1a1f22;
+}
+
+.navbar {
+    -fx-background-color: #22272b; /* Matches main background exactly */
+    -fx-border-color: transparent transparent #2c3238 transparent; /* Adds a border ONLY at the bottom */
+    -fx-border-width: 0 0 1 0; /* Ensures the border is exactly 1px thick at the bottom */
+
+}
+.navbar-icon {
+    -fx-icon-color: white;
+}
+
+/* Card Element Container Definition */
+.login-card {
+    -fx-background-color: #161a1d; /* Deep rich charcoal card */
+    -fx-border-color: #2c3238;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 12, 0, 0, 6);
+}
+
+/* Typography Rules */
+.brand-title, .card-main-heading, .brand-text-dark {
+    -fx-text-fill: #f1f5f9;
+}
+.card-sub-heading {
+    -fx-text-fill: #8a99a8;
+}
+.input-field-label {
+    -fx-text-fill: #cbd5e1;
+}
+
+/* Input Form Controls Styling */
+.custom-input-field {
+    -fx-background-color: #0f1214; /* Inset dark input well */
+    -fx-border-color: #2c3238;
+    -fx-text-fill: #f1f5f9;
+    -fx-prompt-text-fill: #5f6e7d;
+}
+.custom-input-field:focused {
+    -fx-border-color: #38bdf8; /* Highlighted sky blue ring on focus */
+}
+.input-field-inner {
+    -fx-text-fill: #f1f5f9;
+}
+.input-icon {
+    -fx-icon-color: #5f6e7d;
+}
+
+/* Interactive Components Call-to-Actions */
+.primary-login-btn {
+    -fx-background-color: #1aa5e4; /* Vibrant sky blue button from image_7359c6.png */
+    -fx-text-fill: #ffffff;
+}
+.primary-login-btn:hover {
+    -fx-background-color: #0ea5e9;
+}
+
+.forgot-password-link {
+    -fx-text-fill: #8a99a8;
+}
+.forgot-password-link:hover {
+    -fx-text-fill: #38bdf8;
+}
+
+/* OTP & Secondary Modules Layouts */
+.otp-box {
+    -fx-text-fill: #f1f5f9;
+    -fx-background-color: #0f1214;
+    -fx-border-color: #2c3238;
+}
+.otp-box:focused {
+    -fx-border-color: #1aa5e4;
+}
+.otp-icon-circle {
+    -fx-background-color: #1c2125;
+}
+.otp-lock-icon {
+    -fx-icon-color: #cbd5e1;
+}
+
+.password-requirements-box {
+    -fx-background-color: #0f1214;
+    -fx-border-color: #2c3238;
+}
+.requirements-heading {
+    -fx-text-fill: #e2e8f0;
+}
+.req-label {
+    -fx-text-fill: #8a99a8;
+}
+.req-icon-pass {
+    -fx-icon-color: #22c55e;
+}
+.req-icon-fail {
+    -fx-icon-color: #475569;
+}
+.resend-link {
+    -fx-text-fill: #38bdf8;
+}
+
+/* System Dynamic Footers Section Details */
+.footer-container {
+    -fx-background-color: #161a1d;
+    -fx-border-color: #2c3238 transparent transparent transparent;
+}
+.footer-text {
+    -fx-text-fill: #5f6e7d;
+}
+
+.error-message-label {
+    -fx-background-color: #4c1d1d;
+    -fx-border-color: #7f1d1d;
+    -fx-text-fill: #fca5a5;
+}
+.error-banner-icon, .error-banner-text {
+    -fx-icon-color: #fca5a5;
+    -fx-text-fill: #fca5a5;
+}

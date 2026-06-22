@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      xmlns="http://javafx.com/javafx"
+      fx:controller="com.arits.datafast.controller.dashboard.ModuleCardController"
+      styleClass="module-card"
+      spacing="0">
+
+    <!-- Header: module name -->
+    <HBox styleClass="module-card-header" alignment="CENTER_LEFT" spacing="12.0">
+        <padding>
+            <Insets top="16" right="16" bottom="16" left="16"/>
+        </padding>
+        <Label fx:id="moduleNameLabel" styleClass="module-card-title"
+               HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+    <!-- 1px divider between header and rows -->
+    <HBox styleClass="module-card-divider" prefHeight="1.0" maxHeight="1.0"/>
+
+    <!-- Sub-module rows injected programmatically by ModuleCardController -->
+    <VBox fx:id="subModuleContainer" styleClass="sub-module-container" spacing="0"/>
+
+</VBox>

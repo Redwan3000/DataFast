@@ -1,10 +1,36 @@
 package com.arits.datafast.dto.auth;
 
-public record AuthResponseDto(int status_code, Results results, String message) {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    // The wrapper object Laravel uses
-    public record Results(String token, UserData userData) {}
+public record AuthResponseDto(
+        @JsonProperty("status_code") int statusCode,
+        String message,
+        Results results
+) {
+    public record Results(
+            String token,
+            UserData userData
+    ) {}
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public record UserData(
+            int    id,
+            String name,
+            String email,
+            String phoneNumber,
+            Role   role,
+            Company company
+    ) {}
 
-    // The actual user data inside the wrapper
-    public record UserData(String name, String email) {}
+    public record Role(
+            int    id,
+            String name
+    ) {}
+
+    public record Company(
+            int    id,
+            String name,
+            String email,
+            String address
+    ) {}
 }
