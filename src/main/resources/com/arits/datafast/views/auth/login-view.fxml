@@ -42,7 +42,7 @@
                     <Label text="Sign in to your DataFast account to continue" styleClass="card-sub-heading"/>
                 </VBox>
 
-                <!-- Replace your errorLabel with this -->
+<!--      error  label -->
                 <HBox fx:id="errorBanner" styleClass="error-message-label" alignment="CENTER_LEFT"
                       spacing="8.0" managed="false" visible="false">
                     <FontIcon iconLiteral="gmi-error" iconSize="16" styleClass="error-banner-icon"/>
@@ -55,7 +55,7 @@
                         <HBox styleClass="custom-input-field" alignment="CENTER_LEFT" spacing="10.0">
                             <FontIcon iconLiteral="gmi-email" iconSize="16" styleClass="input-icon"/>
                             <TextField fx:id="emailField" promptText="you@company.com"
-                                       styleClass="input-field-inner" />
+                                       styleClass="input-field-inner" HBox.hgrow="ALWAYS"/>
                         </HBox>
                     </VBox>
                     <VBox spacing="6.0">

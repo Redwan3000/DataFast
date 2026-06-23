@@ -2,6 +2,7 @@ package com.arits.datafast.controller.auth;
 
 import com.arits.datafast.routing.SceneRouter;
 import com.arits.datafast.service.auth.AuthService;
+import com.arits.datafast.util.helpers.ErrorHelper;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,9 +23,10 @@ public class LoginController {
     @FXML private HBox errorBanner;
     @FXML private Label errorLabel;
     private boolean passwordVisible = false;
-
+private ErrorHelper errorHelper;
     @FXML
     public void initialize() {
+        errorHelper= new ErrorHelper(errorBanner, errorLabel);
         passwordVisibleField.textProperty().bindBidirectional(passwordHiddenField.textProperty());
     }
 
@@ -44,19 +46,19 @@ public class LoginController {
         String password = passwordHiddenField.getText();
 
         if (email.isEmpty()) {
-            showError("Please enter your email address.");
+            errorHelper.showError("Please enter your email address.");
             return;
         }
         if (!isValidEmail(email)) {
-            showError("Please enter a valid email address.");
+            errorHelper.showError("Please enter a valid email address.");
             return;
         }
         if (password.isEmpty()) {
-            showError("Please enter your password.");
+            errorHelper.showError("Please enter your password.");
             return;
         }
 
-        hideError();
+        errorHelper.hideError();
 
         new Thread(() -> {
             Platform.runLater(() -> setFormEnabled(false));
@@ -65,26 +67,13 @@ public class LoginController {
                 Platform.runLater(() -> SceneRouter.navigateTo("/dashboard/dashboard-view.fxml"));
             } catch (Exception e) {
                 Platform.runLater(() -> setFormEnabled(true));
-                showError(e.getMessage());
+                errorHelper.showError(e.getMessage());
             }
         }).start();
     }
 
     
-    private void showError(String message) {
-        Platform.runLater(() -> {
-            errorLabel.setText(message);
-            errorBanner.setVisible(true);
-            errorBanner.setManaged(true);
-        });
-    }
 
-    private void hideError() {
-        Platform.runLater(() -> {
-            errorBanner.setVisible(false);
-            errorBanner.setManaged(false);
-        });
-    }
 
     private boolean isValidEmail(String email) {
         return email.matches("^[\\w._%+\\-]+@[\\w.\\-]+\\.[a-zA-Z]{2,}$");

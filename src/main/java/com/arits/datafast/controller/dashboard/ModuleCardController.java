@@ -17,34 +17,23 @@ import java.net.URL;
 import java.util.List;
 import java.util.function.Consumer;
 
-/**
- * Controller for module-card-component.fxml.
- *
- * Populated externally via {@link #bind(AutomationModuleDto.Module, Consumer)}
- * after the FXML is loaded by DashboardController.
- */
+
 public class ModuleCardController {
 
     private static final Logger log = LoggerFactory.getLogger(ModuleCardController.class);
 
-    // Logos are stored here, named EXACTLY after the module's name in the DB,
-    // e.g. "Bangladesh Bank.png", "REX.png", "Others.png"
-    private static final String LOGO_BASE_PATH = "/com/arits/datafast/img/modules/";
+
+    private static final String LOGO_BASE_PATH = "/com/arits/datafast/assets/img/modules/";
     private static final List<String> LOGO_EXTENSIONS = List.of(".png", ".jpg", ".jpeg");
 
     @FXML private Label     moduleNameLabel;
     @FXML private ImageView moduleLogoView;
     @FXML private VBox      subModuleContainer;
 
-    /** The currently highlighted sub-module row (for hover/selection state). */
+
     private HBox selectedRow;
 
-    /**
-     * Binds this card to a module's data and wires up sub-module click callbacks.
-     *
-     * @param module   the module data from the API
-     * @param onLaunch callback invoked with the clicked sub-module when the user selects one
-     */
+
     public void bind(AutomationModuleDto.Module module, Consumer<AutomationModuleDto.SubModule> onLaunch) {
         moduleNameLabel.setText(module.name());
         loadModuleLogo(module.name());
@@ -55,11 +44,7 @@ public class ModuleCardController {
     // Private — logo loading
     // -------------------------------------------------------------------------
 
-    /**
-     * Looks up {@code /img/modules/{moduleName}.{ext}} on the classpath and
-     * shows it if found. Logos are added incrementally, so a missing file is
-     * expected and silently hides the ImageView rather than logging an error.
-     */
+
     private void loadModuleLogo(String moduleName) {
         for (String ext : LOGO_EXTENSIONS) {
             URL url = getClass().getResource(LOGO_BASE_PATH + moduleName + ext);
@@ -106,16 +91,22 @@ public class ModuleCardController {
         row.setSpacing(8.0);
         row.setPadding(new javafx.geometry.Insets(11, 16, 11, 16));
 
+        // 1. Create the Label
         Label nameLabel = new Label(subModule.name());
         nameLabel.getStyleClass().add("sub-module-name");
-        HBox.setHgrow(nameLabel, Priority.ALWAYS);
 
+        // 2. THE FIX: Create an empty, expanding Region
+        javafx.scene.layout.Region spacer = new javafx.scene.layout.Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        // 3. Create the Icon
         FontIcon arrowIcon = new FontIcon("gmi-arrow-forward");
         arrowIcon.getStyleClass().add("sub-module-arrow");
         arrowIcon.setIconSize(16);
-        arrowIcon.setVisible(false); // only shown on hover/selection
 
-        row.getChildren().addAll(nameLabel, arrowIcon);
+
+        // 4. Add them in order: Label -> Spacer -> Icon
+        row.getChildren().addAll(nameLabel, spacer, arrowIcon);
 
         row.setOnMouseEntered(e -> {
             if (row != selectedRow) {
@@ -123,6 +114,7 @@ public class ModuleCardController {
             }
             arrowIcon.setVisible(true);
         });
+
         row.setOnMouseExited(e -> {
             row.getStyleClass().remove("sub-module-row-hover");
             if (row != selectedRow) {

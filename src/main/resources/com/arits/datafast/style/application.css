@@ -162,7 +162,8 @@
 .input-field-inner {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-padding: 10 0 10 0;
+    -fx-padding: 10 5 10 5;
+
 }
 
 .input-icon {
@@ -340,14 +341,17 @@
 .sub-module-row {
     -fx-background-color: transparent;
     -fx-cursor: hand;
+    -fx-background-radius: 8px;
 }
 
 .sub-module-row-hover {
-    -fx-background-color: #f5f5f5;
+    -fx-background-color: #0e7c86;
+    -fx-border-radius: 5px;
 }
 
 .sub-module-row-selected {
-    -fx-background-color: #0e7c86; /* match your brand teal */
+    -fx-background-color: #0e7c86;
+    -fx-border-radius: 5px
 }
 
 .sub-module-name {
@@ -362,15 +366,16 @@
 
 .sub-module-empty {
     -fx-font-size: 13px;
-    -fx-text-fill: #9ca3af;
+    -fx-text-fill: black;
 }
 
 .sub-module-arrow {
-    -fx-icon-color: #9ca3af;
+    -fx-icon-color: black
+;
 }
 
 .sub-module-row-selected .sub-module-arrow {
-    -fx-icon-color: white;
+    -fx-icon-color: black;
 }
 
 /* =============================================================================
@@ -391,4 +396,221 @@
 
 .loading-spinner-icon {
     -fx-icon-color: #888888;
+}
+
+
+/* =============================================================================
+   AUTOMATION RUNNER — Page scaffold
+   ============================================================================= */
+
+.runner-content {
+    -fx-background-color: #EBEBEB;
+}
+
+/* =============================================================================
+   BREADCRUMB
+   ============================================================================= */
+
+.breadcrumb-bar {
+    -fx-padding: 0 0 0 0;
+}
+
+.breadcrumb-link {
+    -fx-font-size: 13px;
+    -fx-text-fill: #888888;
+    -fx-cursor: hand;
+}
+
+.breadcrumb-link:hover {
+    -fx-text-fill: #1A9F8A;
+    -fx-underline: true;
+}
+
+.breadcrumb-sep {
+    -fx-icon-color: #AAAAAA;
+}
+
+.breadcrumb-current {
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+}
+
+/* =============================================================================
+   PAGE TITLE
+   ============================================================================= */
+
+.runner-title-icon-wrap {
+    -fx-background-color: #E8F4F2;
+    -fx-background-radius: 10;
+    -fx-min-width: 44;
+    -fx-min-height: 44;
+    -fx-max-width: 44;
+    -fx-max-height: 44;
+}
+
+.runner-title-icon {
+    -fx-icon-color: #1A9F8A;
+}
+
+.runner-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1A1A1A;
+}
+
+.runner-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #888888;
+}
+
+/* =============================================================================
+   STEP PROGRESS BAR
+   ============================================================================= */
+
+.step-bar {
+    -fx-padding: 0;
+}
+
+.step-item {
+    -fx-padding: 0;
+}
+
+/* Circle badges */
+.step-circle {
+    -fx-min-width: 32;
+    -fx-min-height: 32;
+    -fx-max-width: 32;
+    -fx-max-height: 32;
+    -fx-background-radius: 50;
+}
+
+.step-circle-active {
+    -fx-background-color: #1A9F8A;
+}
+
+.step-circle-done {
+    -fx-background-color: #22C55E;
+}
+
+.step-circle-pending {
+    -fx-background-color: transparent;
+    -fx-border-color: #CCCCCC;
+    -fx-border-radius: 50;
+    -fx-border-width: 1.5;
+}
+
+/* Icons inside circles */
+.step-icon-active {
+    -fx-icon-color: #FFFFFF;
+}
+
+.step-icon-done {
+    -fx-icon-color: #FFFFFF;
+}
+
+.step-icon-pending {
+    -fx-icon-color: #AAAAAA;
+}
+
+/* Labels next to circles */
+.step-label-active {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1A9F8A;
+}
+
+.step-label-done {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #22C55E;
+}
+
+.step-label-pending {
+    -fx-font-size: 13px;
+    -fx-text-fill: #AAAAAA;
+}
+
+/* Connector line between steps */
+.step-line {
+    -fx-background-color: #CCCCCC;
+    -fx-pref-height: 1.5;
+    -fx-max-height: 1.5;
+    -fx-min-height: 1.5;
+}
+
+.step-line-done {
+    -fx-background-color: #22C55E;
+}
+
+/* =============================================================================
+   DROP ZONE
+   ============================================================================= */
+
+.drop-zone {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+    -fx-border-style: dashed;
+    -fx-cursor: hand;
+}
+
+/* Drag-over highlight */
+.drop-zone-hover {
+    -fx-border-color: #1A9F8A;
+    -fx-background-color: #F0FAF8;
+}
+
+/* Wrong file type dropped */
+.drop-zone-error {
+    -fx-border-color: #EF4444;
+    -fx-background-color: #FEF2F2;
+}
+
+.drop-icon-wrap {
+    -fx-background-color: #E8F4F2;
+    -fx-background-radius: 50;
+    -fx-min-width: 68;
+    -fx-min-height: 68;
+    -fx-max-width: 68;
+    -fx-max-height: 68;
+}
+
+.drop-icon {
+    -fx-icon-color: #1A9F8A;
+}
+
+.drop-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1A1A1A;
+}
+
+.drop-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #888888;
+}
+
+.btn-choose-file {
+    -fx-background-color: #1A9F8A;
+    -fx-background-radius: 8;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 24 10 24;
+    -fx-cursor: hand;
+}
+
+.btn-choose-file:hover {
+    -fx-background-color: #158A77;
+}
+
+.btn-choose-file-icon {
+    -fx-icon-color: #FFFFFF;
+}
+
+.drop-accepts {
+    -fx-font-size: 12px;
+    -fx-text-fill: #AAAAAA;
 }

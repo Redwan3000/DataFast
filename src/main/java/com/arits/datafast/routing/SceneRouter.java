@@ -20,7 +20,7 @@ public class SceneRouter {
         primaryStage = stage;
     }
 
-    /** Normal forward navigation (clicking a button/link). Clears forward history. */
+//to navigate to any page/fxml
     public static void navigateTo(String fxmlPath) {
         if (currentPath != null) {
             backStack.push(currentPath);
@@ -30,6 +30,7 @@ public class SceneRouter {
         load(fxmlPath);
     }
 
+    //navbar back arrow button
     public static void navigateBack() {
         if (backStack.isEmpty()) return;
         forwardStack.push(currentPath);
@@ -37,6 +38,7 @@ public class SceneRouter {
         load(currentPath);
     }
 
+//    navbar front arrow button
     public static void navigateForward() {
         if (forwardStack.isEmpty()) return;
         backStack.push(currentPath);
@@ -44,7 +46,8 @@ public class SceneRouter {
         load(currentPath);
     }
 
-    /** Reloads the current view as-is, without touching history. */
+
+//    navbar refresh button
     public static void refresh() {
         if (currentPath != null) {
             load(currentPath);

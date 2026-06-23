@@ -3,6 +3,7 @@ package com.arits.datafast.controller.auth;
 import com.arits.datafast.routing.SceneRouter;
 import com.arits.datafast.service.auth.AuthService;
 import com.arits.datafast.state.AppState;
+import com.arits.datafast.util.helpers.ErrorHelper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -17,35 +18,48 @@ public class ResetPasswordController {
     private final AuthService authService = new AuthService();
 
     // OTP boxes
-    @FXML private TextField otp1, otp2, otp3, otp4, otp5, otp6;
+    @FXML
+    private TextField otp1, otp2, otp3, otp4, otp5, otp6;
 
     // Password fields
-    @FXML private PasswordField newPasswordHidden;
-    @FXML private TextField     newPasswordVisible;
-    @FXML private PasswordField confirmPasswordHidden;
-    @FXML private TextField     confirmPasswordVisible;
-    @FXML private FontIcon      newPasswordToggle;
-    @FXML private FontIcon      confirmPasswordToggle;
+    @FXML
+    private PasswordField newPasswordHidden;
+    @FXML
+    private TextField newPasswordVisible;
+    @FXML
+    private PasswordField confirmPasswordHidden;
+    @FXML
+    private TextField confirmPasswordVisible;
+    @FXML
+    private FontIcon newPasswordToggle;
+    @FXML
+    private FontIcon confirmPasswordToggle;
 
     // Requirements icons
-    @FXML private FontIcon req1Icon, req2Icon, req3Icon, req4Icon, req5Icon;
+    @FXML
+    private FontIcon req1Icon, req2Icon, req3Icon, req4Icon, req5Icon;
 
     // Error banner
-    @FXML private HBox  errorBanner;
-    @FXML private Label errorLabel;
+    @FXML
+    private HBox errorBanner;
+    @FXML
+    private Label errorLabel;
 
     // Resend
-    @FXML private Hyperlink resendLink;
-    @FXML private Button    resetButton;
-
-    private boolean newPasswordVisible_flag    = false;
+    @FXML
+    private Hyperlink resendLink;
+    @FXML
+    private Button resetButton;
+    private ErrorHelper errorHelper;
+    private boolean newPasswordVisible_flag = false;
     private boolean confirmPasswordVisible_flag = false;
     private Timeline resendTimer;
     private int resendSeconds = 180;
 
     @FXML
     public void initialize() {
-        // Bind password fields
+
+        errorHelper = new ErrorHelper(errorBanner, errorLabel);
         newPasswordVisible.textProperty().bindBidirectional(newPasswordHidden.textProperty());
         confirmPasswordVisible.textProperty().bindBidirectional(confirmPasswordHidden.textProperty());
 
@@ -61,9 +75,13 @@ public class ResetPasswordController {
         newPasswordHidden.textProperty().addListener((obs, old, val) -> updateRequirements());
         confirmPasswordHidden.textProperty().addListener((obs, old, val) -> updateRequirements());
 
-        // Start resend countdown
+//        countdown for otp
         startResendCountdown();
     }
+
+
+
+
 
     private void setupOtpBox(TextField current, TextField prev, TextField next) {
         current.textProperty().addListener((obs, oldVal, newVal) -> {
@@ -89,7 +107,7 @@ public class ResetPasswordController {
 
     private void updateRequirements() {
         String password = newPasswordHidden.getText();
-        String confirm  = confirmPasswordHidden.getText();
+        String confirm = confirmPasswordHidden.getText();
 
         setReq(req1Icon, password.length() >= 8);
         setReq(req2Icon, password.matches(".*[A-Z].*"));
@@ -140,7 +158,7 @@ public class ResetPasswordController {
                 authService.requestOtp(email);
                 Platform.runLater(this::startResendCountdown);
             } catch (Exception e) {
-                showError(e.getMessage());
+                errorHelper.showError(e.getMessage());
             }
         }).start();
     }
@@ -167,22 +185,22 @@ public class ResetPasswordController {
 
     @FXML
     private void handleReset() {
-        String otp      = otp1.getText() + otp2.getText() + otp3.getText()
+        String otp = otp1.getText() + otp2.getText() + otp3.getText()
                 + otp4.getText() + otp5.getText() + otp6.getText();
         String password = newPasswordHidden.getText();
-        String confirm  = confirmPasswordHidden.getText();
-        String email    = AppState.getInstance().getTempEmail();
+        String confirm = confirmPasswordHidden.getText();
+        String email = AppState.getInstance().getTempEmail();
 
         if (otp.length() < 6) {
-            showError("Please enter the complete 6-digit OTP.");
+            errorHelper.showError("Please enter the complete 6-digit OTP.");
             return;
         }
         if (email == null) {
-            showError("Session expired. Please start again.");
+            errorHelper.showError("Session expired. Please start again.");
             return;
         }
 
-        hideError();
+        errorHelper.hideError();
         resetButton.setDisable(true);
         resetButton.setText("Resetting...");
 
@@ -197,24 +215,11 @@ public class ResetPasswordController {
                 Platform.runLater(() -> {
                     resetButton.setDisable(false);
                     resetButton.setText("Reset Password");
-                    showError(e.getMessage());
+                    errorHelper.showError(e.getMessage());
                 });
             }
         }).start();
     }
 
-    private void showError(String message) {
-        Platform.runLater(() -> {
-            errorLabel.setText(message);
-            errorBanner.setVisible(true);
-            errorBanner.setManaged(true);
-        });
-    }
 
-    private void hideError() {
-        Platform.runLater(() -> {
-            errorBanner.setVisible(false);
-            errorBanner.setManaged(false);
-        });
-    }
 }

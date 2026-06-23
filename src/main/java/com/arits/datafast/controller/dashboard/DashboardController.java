@@ -4,6 +4,7 @@ import com.arits.datafast.dto.automation.AutomationModuleDto;
 import com.arits.datafast.routing.SceneRouter;
 import com.arits.datafast.service.automation.AutomationService;
 import com.arits.datafast.state.AppState;
+import com.arits.datafast.state.AutomationContext;
 import com.arits.datafast.util.CryptoUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -17,7 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-
 public class DashboardController {
 
     private static final Logger log = LoggerFactory.getLogger(DashboardController.class);
@@ -27,14 +27,85 @@ public class DashboardController {
 
     private final AutomationService automationService = new AutomationService();
 
+    // Cached after first API fetch — used by resolveModuleName()
+    private List<AutomationModuleDto.Module> cachedModules = List.of();
+
     @FXML private HBox     loadingBox;
     @FXML private HBox     errorBanner;
     @FXML private Label    errorLabel;
     @FXML private FlowPane moduleGrid;
 
+    // -------------------------------------------------------------------------
+    // Lifecycle
+    // -------------------------------------------------------------------------
+
     @FXML
     public void initialize() {
+        logWelcome();
         loadModules();
+    }
+
+    // -------------------------------------------------------------------------
+    // Private — welcome log
+    // -------------------------------------------------------------------------
+
+    private void logWelcome() {
+        String encryptedName = AppState.getInstance().getUserName();
+        if (encryptedName != null && !encryptedName.isBlank()) {
+            try {
+                String realName = CryptoUtil.decryptAES(encryptedName);
+                log.info("[Dashboard] Session active for: {}", realName);
+            } catch (Exception e) {
+                log.warn("[Dashboard] Could not decrypt user name: {}", e.getMessage());
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Private — data loading
+    // -------------------------------------------------------------------------
+
+    private void loadModules() {
+        showLoading(true);
+        showError(false, null);
+
+        new Thread(() -> {
+            try {
+                List<AutomationModuleDto.Module> modules = automationService.fetchModules();
+                Platform.runLater(() -> renderModules(modules));
+            } catch (Exception e) {
+                log.error("[Dashboard] Failed to load modules: {}", e.getMessage(), e);
+                Platform.runLater(() -> {
+                    showLoading(false);
+                    showError(true, e.getMessage());
+                });
+            }
+        }, "dashboard-module-loader").start();
+    }
+
+    // -------------------------------------------------------------------------
+    // Private — rendering
+    // -------------------------------------------------------------------------
+
+    private void renderModules(List<AutomationModuleDto.Module> modules) {
+        cachedModules = modules;  // cache FIRST before building cards
+        moduleGrid.getChildren().clear();
+
+        if (modules.isEmpty()) {
+            showLoading(false);
+            showError(true, "No portals are configured for your account.");
+            return;
+        }
+
+        for (AutomationModuleDto.Module module : modules) {
+            Node card = buildModuleCard(module);
+            if (card != null) {
+                moduleGrid.getChildren().add(card);
+            }
+        }
+
+        showLoading(false);
+        showGrid(true);
     }
 
     private Node buildModuleCard(AutomationModuleDto.Module module) {
@@ -43,8 +114,8 @@ public class DashboardController {
             if (fxmlUrl == null) {
                 throw new IllegalStateException(
                         "Module card FXML not found on classpath: " + MODULE_CARD_FXML
-                                + " (check the file exists under src/main/resources" + MODULE_CARD_FXML
-                                + " and that the project has been rebuilt)"
+                                + " — check the file exists under src/main/resources"
+                                + MODULE_CARD_FXML + " and that the project has been rebuilt."
                 );
             }
 
@@ -64,63 +135,30 @@ public class DashboardController {
     }
 
     // -------------------------------------------------------------------------
-    // Private — rendering
-    // -------------------------------------------------------------------------
-
-    private void renderModules(List<AutomationModuleDto.Module> modules) {
-        moduleGrid.getChildren().clear();
-
-        if (modules.isEmpty()) {
-            showLoading(false);
-            showError(true, "No portals are configured for your account.");
-            return;
-        }
-
-        for (AutomationModuleDto.Module module : modules) {
-            Node card = buildModuleCard(module);
-            if (card != null) {
-                moduleGrid.getChildren().add(card);
-            }
-        }
-        showLoading(false);
-        showGrid(true);
-    }
-
-    // -------------------------------------------------------------------------
-    // loading modules
-    // -------------------------------------------------------------------------
-
-    private void loadModules() {
-        showLoading(true);
-
-        new Thread(() -> {
-            try {
-                List<AutomationModuleDto.Module> modules = automationService.fetchModules();
-                Platform.runLater(() -> renderModules(modules));
-            } catch (Exception e) {
-                log.error("[Dashboard] Failed to load modules: {}", e.getMessage());
-                Platform.runLater(() -> {
-                    showLoading(false);
-                    showError(true, e.getMessage());
-                });
-            }
-        }, "dashboard-module-loader").start();
-    }
-
-
-
-    // -------------------------------------------------------------------------
     // Private — sub-module launch handler
     // -------------------------------------------------------------------------
 
-
     private void handleSubModuleLaunch(AutomationModuleDto.SubModule subModule) {
-        log.info("[Dashboard] User selected automation: id={}, name='{}'",
+        log.info("[Dashboard] Launching automation id={} name='{}'",
                 subModule.id(), subModule.name());
 
-        // TODO: Pass subModule details to the automation runner / browser session.
-        //       For now, navigate to a placeholder automation view.
-        // SceneRouter.navigateTo("/automation/automation-runner-view.fxml");
+        AutomationContext.getInstance().start(
+                subModule.moduleId(),
+                resolveModuleName(subModule.moduleId()),
+                subModule.id(),
+                subModule.name(),
+                subModule.description()
+        );
+
+        SceneRouter.navigateTo("/automation/automation-runner-view.fxml");
+    }
+
+    private String resolveModuleName(int moduleId) {
+        return cachedModules.stream()
+                .filter(m -> m.id() == moduleId)
+                .map(AutomationModuleDto.Module::name)
+                .findFirst()
+                .orElse("Portal");
     }
 
     // -------------------------------------------------------------------------

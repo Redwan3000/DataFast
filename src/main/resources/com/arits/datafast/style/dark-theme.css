@@ -126,3 +126,17 @@
     -fx-icon-color: #fca5a5;
     -fx-text-fill: #fca5a5;
 }
+
+.dashboard-scroll-pane {
+
+    -fx-background: #5f6e7d;
+}
+
+.dashboard-scroll-pane > .viewport {
+    -fx-background-color: #5f6e7d;
+}
+
+.sub-module-row-selected .sub-module-arrow {
+    -fx-icon-color: white;
+}
+
