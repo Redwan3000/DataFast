@@ -5,24 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-/**
- * Top-level response wrapper for GET /api/automations/modules/list
- *
- * Example JSON:
- * {
- *   "status_code": 200,
- *   "results": [ { "id": 1, "name": "Bangladesh Bank", "automations": [...] } ]
- * }
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record AutomationModuleDto(
         @JsonProperty("status_code") int statusCode,
         List<Module> results
 ) {
 
-    /**
-     * A single automation module (portal group), e.g. "Bangladesh Bank".
-     */
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record Module(
             int id,
@@ -31,9 +20,7 @@ public record AutomationModuleDto(
             List<SubModule> automations
     ) {}
 
-    /**
-     * A single automation (sub-module) listed under a module.
-     */
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     public record SubModule(
             int id,

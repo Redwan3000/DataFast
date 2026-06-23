@@ -4,11 +4,16 @@ import com.arits.datafast.dto.automation.AutomationModuleDto;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.net.URL;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -20,9 +25,16 @@ import java.util.function.Consumer;
  */
 public class ModuleCardController {
 
-    @FXML private Label moduleNameLabel;
-    @FXML private Label moduleIconLabel;
-    @FXML private VBox  subModuleContainer;
+    private static final Logger log = LoggerFactory.getLogger(ModuleCardController.class);
+
+    // Logos are stored here, named EXACTLY after the module's name in the DB,
+    // e.g. "Bangladesh Bank.png", "REX.png", "Others.png"
+    private static final String LOGO_BASE_PATH = "/com/arits/datafast/img/modules/";
+    private static final List<String> LOGO_EXTENSIONS = List.of(".png", ".jpg", ".jpeg");
+
+    @FXML private Label     moduleNameLabel;
+    @FXML private ImageView moduleLogoView;
+    @FXML private VBox      subModuleContainer;
 
     /** The currently highlighted sub-module row (for hover/selection state). */
     private HBox selectedRow;
@@ -35,16 +47,37 @@ public class ModuleCardController {
      */
     public void bind(AutomationModuleDto.Module module, Consumer<AutomationModuleDto.SubModule> onLaunch) {
         moduleNameLabel.setText(module.name());
-
-        // Hide the plain text icon label — icon is set via ikonli or left as initials
-        moduleIconLabel.setVisible(false);
-        moduleIconLabel.setManaged(false);
-
+        loadModuleLogo(module.name());
         buildSubModuleRows(module.automations(), onLaunch);
     }
 
     // -------------------------------------------------------------------------
-    // Private helpers
+    // Private — logo loading
+    // -------------------------------------------------------------------------
+
+    /**
+     * Looks up {@code /img/modules/{moduleName}.{ext}} on the classpath and
+     * shows it if found. Logos are added incrementally, so a missing file is
+     * expected and silently hides the ImageView rather than logging an error.
+     */
+    private void loadModuleLogo(String moduleName) {
+        for (String ext : LOGO_EXTENSIONS) {
+            URL url = getClass().getResource(LOGO_BASE_PATH + moduleName + ext);
+            if (url != null) {
+                moduleLogoView.setImage(new Image(url.toExternalForm()));
+                moduleLogoView.setVisible(true);
+                moduleLogoView.setManaged(true);
+                return;
+            }
+        }
+
+        log.debug("[ModuleCard] No logo found for module '{}' under {}", moduleName, LOGO_BASE_PATH);
+        moduleLogoView.setVisible(false);
+        moduleLogoView.setManaged(false);
+    }
+
+    // -------------------------------------------------------------------------
+    // Private — sub-module rows
     // -------------------------------------------------------------------------
 
     private void buildSubModuleRows(List<AutomationModuleDto.SubModule> subModules,
@@ -77,14 +110,13 @@ public class ModuleCardController {
         nameLabel.getStyleClass().add("sub-module-name");
         HBox.setHgrow(nameLabel, Priority.ALWAYS);
 
-        FontIcon arrowIcon = new FontIcon("gmi-chevron-right");
+        FontIcon arrowIcon = new FontIcon("gmi-arrow-forward");
         arrowIcon.getStyleClass().add("sub-module-arrow");
         arrowIcon.setIconSize(16);
         arrowIcon.setVisible(false); // only shown on hover/selection
 
         row.getChildren().addAll(nameLabel, arrowIcon);
 
-        // Hover: show arrow + style change
         row.setOnMouseEntered(e -> {
             if (row != selectedRow) {
                 row.getStyleClass().add("sub-module-row-hover");
@@ -98,7 +130,6 @@ public class ModuleCardController {
             }
         });
 
-        // Click: select + launch
         row.setOnMouseClicked(e -> {
             selectRow(row, arrowIcon);
             onLaunch.accept(subModule);
@@ -108,10 +139,8 @@ public class ModuleCardController {
     }
 
     private void selectRow(HBox clickedRow, FontIcon arrowIcon) {
-        // Deselect previous
         if (selectedRow != null) {
             selectedRow.getStyleClass().remove("sub-module-row-selected");
-            // Hide arrow on old selection if not hovered — simplest: always hide, re-show on hover
             selectedRow.getChildren().stream()
                     .filter(n -> n instanceof FontIcon)
                     .forEach(n -> n.setVisible(false));

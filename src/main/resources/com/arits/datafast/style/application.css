@@ -310,124 +310,76 @@
     -fx-background-color: transparent;
     -fx-pref-wrap-length: 800;
 }
-
 /* =============================================================================
    MODULE CARD — Container
    ============================================================================= */
-
 .module-card {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: white;
     -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-border-color: #E0E0E0;
-    -fx-border-width: 1;
-    -fx-pref-width: 260;
-    -fx-min-width: 220;
-    -fx-max-width: 300;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 6, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
 }
-
-/* =============================================================================
-   MODULE CARD — Header (module name row)
-   ============================================================================= */
-
 .module-card-header {
-    -fx-background-color: #FFFFFF;
     -fx-background-radius: 10 10 0 0;
 }
-
 .module-card-title {
-    -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1A1A1A;
+    -fx-font-size: 16px;
 }
-
-/* =============================================================================
-   MODULE CARD — Divider line between header and sub-modules
-   ============================================================================= */
-
 .module-card-divider {
-    -fx-background-color: #EEEEEE;
-    -fx-min-height: 1;
-    -fx-max-height: 1;
-    -fx-pref-height: 1;
+    -fx-background-color: #ececec;
 }
 
 /* =============================================================================
-   MODULE CARD — Sub-module container
+   MODULE CARD — Sub-module rows
    ============================================================================= */
 
 .sub-module-container {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 0 0 10 10;
+    -fx-background-color: transparent;
 }
-
-/* =============================================================================
-   SUB-MODULE ROW — Default state
-   ============================================================================= */
 
 .sub-module-row {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: transparent;
     -fx-cursor: hand;
-    -fx-pref-height: 44;
-    -fx-min-height: 44;
-    -fx-border-color: transparent transparent #F5F5F5 transparent;
-    -fx-border-width: 0 0 1 0;
 }
 
-/* Last child — no bottom border so it doesn't clash with card border-radius */
-.sub-module-container > .sub-module-row:last-child {
-    -fx-border-color: transparent;
-    -fx-background-radius: 0 0 10 10;
+.sub-module-row-hover {
+    -fx-background-color: #f5f5f5;
+}
+
+.sub-module-row-selected {
+    -fx-background-color: #0e7c86; /* match your brand teal */
 }
 
 .sub-module-name {
-    -fx-font-size: 13px;
-    -fx-text-fill: #333333;
-}
-
-/* =============================================================================
-   SUB-MODULE ROW — Hover state
-   ============================================================================= */
-
-.sub-module-row-hover {
-    -fx-background-color: #F5F5F5;
-}
-
-/* =============================================================================
-   SUB-MODULE ROW — Selected / active state  (teal — matching your screenshot)
-   ============================================================================= */
-
-.sub-module-row-selected {
-    -fx-background-color: #1A9F8A;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+    -fx-text-fill: #1f2937;
 }
 
 .sub-module-row-selected .sub-module-name {
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: white;
+}
+
+.sub-module-empty {
+    -fx-font-size: 13px;
+    -fx-text-fill: #9ca3af;
+}
+
+.sub-module-arrow {
+    -fx-icon-color: #9ca3af;
 }
 
 .sub-module-row-selected .sub-module-arrow {
-    -fx-icon-color: #FFFFFF;
+    -fx-icon-color: white;
 }
 
 /* =============================================================================
-   SUB-MODULE ROW — Arrow icon (chevron right)
+   MODULE CARD — Logo
    ============================================================================= */
 
-.sub-module-arrow {
-    -fx-icon-color: #AAAAAA;
+.module-card-logo {
+    -fx-background-radius: 50%;
 }
-
-/* =============================================================================
-   SUB-MODULE ROW — Empty state label
-   ============================================================================= */
-
-.sub-module-empty {
-    -fx-font-size: 12px;
-    -fx-text-fill: #AAAAAA;
-    -fx-font-style: italic;
-}
-
 /* =============================================================================
    LOADING STATE
    ============================================================================= */
