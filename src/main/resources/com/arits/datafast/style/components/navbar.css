@@ -1,0 +1,20 @@
+.navbar {
+    -fx-border-width: 0 0 1 0;
+    -fx-min-height: 50px;
+}
+
+.navbar-back-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 6;
+}
+
+.navbar-back-btn:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 6;
+}
+
+.navbar-brand {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}

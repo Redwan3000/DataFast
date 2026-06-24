@@ -1,44 +1,44 @@
 package com.arits.datafast.theme;
 
-import javafx.scene.Parent;
-import java.net.URL;
+import javafx.scene.Scene;
+
+import java.util.List;
 
 public class ThemeManager {
 
-    private static final String DARK_THEME_PATH = "/com/arits/datafast/style/dark-theme.css";
-
+    private static final String STYLE_BASE = "/com/arits/datafast/style/";
+    private static final List<String> BASE_STYLESHEETS = List.of(
+            STYLE_BASE + "base/typography.css",
+            STYLE_BASE + "base/components.css",
+            STYLE_BASE + "base/layout.css",
+            STYLE_BASE + "components/navbar.css",
+            STYLE_BASE + "components/module-card.css",
+            STYLE_BASE + "components/otp.css"
+    );
     private static boolean darkMode = false;
-    private static Parent currentRoot;
 
     public static boolean isDarkMode() {
         return darkMode;
     }
 
-    /** Call this every time a new root is loaded so the active theme re-applies. */
-    public static void applyToRoot(Parent root) {
-        currentRoot = root;
-        refreshStylesheet();
-    }
-
-    public static void toggle() {
+    public static void toggle(Scene scene) {
         darkMode = !darkMode;
-        refreshStylesheet();
+        apply(scene);
     }
 
-    private static void refreshStylesheet() {
-        if (currentRoot == null) return;
-        URL darkUrl = ThemeManager.class.getResource(DARK_THEME_PATH);
-        if (darkUrl == null) {
-            System.err.println("ThemeManager: dark-theme.css not found at " + DARK_THEME_PATH);
-            return;
-        }
-        String darkHref = darkUrl.toExternalForm();
-        if (darkMode) {
-            if (!currentRoot.getStylesheets().contains(darkHref)) {
-                currentRoot.getStylesheets().add(darkHref);
-            }
-        } else {
-            currentRoot.getStylesheets().remove(darkHref);
-        }
+    public static void apply(Scene scene) {
+        scene.getStylesheets().clear();
+
+
+        String themePath = STYLE_BASE + (darkMode ? "theme-dark.css" : "theme-light.css");
+        scene.getStylesheets().add(resolve(themePath));
+
+        BASE_STYLESHEETS.forEach(p -> scene.getStylesheets().add(resolve(p)));
+    }
+
+    private static String resolve(String path) {
+        var url = ThemeManager.class.getResource(path);
+        if (url == null) throw new RuntimeException("Stylesheet not found: " + path);
+        return url.toExternalForm();
     }
 }

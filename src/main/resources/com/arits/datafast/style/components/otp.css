@@ -1,0 +1,36 @@
+.otp-box {
+    -fx-alignment: CENTER;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-border-width: 1.5;
+}
+
+.otp-icon-circle {
+    -fx-background-radius: 50;
+    -fx-padding: 16;
+}
+
+.password-requirements-box {
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 14;
+}
+
+.requirements-heading {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.req-label {
+    -fx-font-size: 12px;
+}
+
+.req-icon-pass {
+    -fx-icon-color: #16a34a;
+}
+
+.resend-link {
+    -fx-font-size: 13px;
+}

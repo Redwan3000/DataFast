@@ -1,0 +1,8 @@
+.forgot-password-link {
+    -fx-font-size: 13px;
+    -fx-underline: false;
+}
+
+.reset-input-wrapper {
+    -fx-spacing: 8px;
+}

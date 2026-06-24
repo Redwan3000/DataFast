@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.SVGPath?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-<?import javafx.geometry.Insets?>
-
-<HBox xmlns:fx="http://fxml"
+<HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.arits.datafast.controller.components.HeaderController"
+      fx:id="root"
       alignment="CENTER_LEFT"
       spacing="10.0"
- fx:id="root"
       styleClass="brand-header-container">
+
     <padding>
         <Insets top="16" bottom="16" left="24" right="24"/>
     </padding>
@@ -22,14 +21,21 @@
         <SVGPath content="M4 6l6 6-6 6 M12 6l6 6-6 6"
                  styleClass="logo-svg-vector"/>
     </StackPane>
+
     <HBox alignment="CENTER">
         <Label text="Data" styleClass="brand-text-dark"/>
         <Label text="Fast" styleClass="brand-text-blue"/>
     </HBox>
 
-    <!-- Spacer pushes the toggle to the far right -->
     <HBox HBox.hgrow="ALWAYS"/>
 
-    <FontIcon fx:id="themeIcon" iconLiteral="gmi-wb-sunny" iconSize="20"
-              styleClass="navbar-icon" onMouseClicked="#handleThemeToggle"/>
+    <Button onAction="#handleThemeToggle" styleClass="theme-toggle-btn">
+        <graphic>
+            <FontIcon fx:id="themeIcon"
+                      iconLiteral="gmi-wb-sunny"
+                      iconSize="20"
+                      styleClass="navbar-icon"/>
+        </graphic>
+    </Button>
+
 </HBox>

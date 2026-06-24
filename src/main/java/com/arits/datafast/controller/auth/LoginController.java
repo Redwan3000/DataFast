@@ -24,6 +24,7 @@ public class LoginController {
     @FXML private Label errorLabel;
     private boolean passwordVisible = false;
 private ErrorHelper errorHelper;
+
     @FXML
     public void initialize() {
         errorHelper= new ErrorHelper(errorBanner, errorLabel);
@@ -72,13 +73,10 @@ private ErrorHelper errorHelper;
         }).start();
     }
 
-    
-
 
     private boolean isValidEmail(String email) {
         return email.matches("^[\\w._%+\\-]+@[\\w.\\-]+\\.[a-zA-Z]{2,}$");
     }
-
 
     private void setFormEnabled(boolean enabled) {
         emailField.setDisable(!enabled);

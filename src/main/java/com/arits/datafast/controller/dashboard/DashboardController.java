@@ -4,7 +4,7 @@ import com.arits.datafast.dto.automation.AutomationModuleDto;
 import com.arits.datafast.routing.SceneRouter;
 import com.arits.datafast.service.automation.AutomationService;
 import com.arits.datafast.state.AppState;
-import com.arits.datafast.state.AutomationContext;
+import com.arits.datafast.state.AutomationState;
 import com.arits.datafast.util.CryptoUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -30,10 +30,14 @@ public class DashboardController {
     // Cached after first API fetch — used by resolveModuleName()
     private List<AutomationModuleDto.Module> cachedModules = List.of();
 
-    @FXML private HBox     loadingBox;
-    @FXML private HBox     errorBanner;
-    @FXML private Label    errorLabel;
-    @FXML private FlowPane moduleGrid;
+    @FXML
+    private HBox loadingBox;
+    @FXML
+    private HBox errorBanner;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private FlowPane moduleGrid;
 
     // -------------------------------------------------------------------------
     // Lifecycle
@@ -50,7 +54,7 @@ public class DashboardController {
     // -------------------------------------------------------------------------
 
     private void logWelcome() {
-        String encryptedName = AppState.getInstance().getUserName();
+        String encryptedName = AppState.getAppState().getUserName();
         if (encryptedName != null && !encryptedName.isBlank()) {
             try {
                 String realName = CryptoUtil.decryptAES(encryptedName);
@@ -142,7 +146,7 @@ public class DashboardController {
         log.info("[Dashboard] Launching automation id={} name='{}'",
                 subModule.id(), subModule.name());
 
-        AutomationContext.getInstance().start(
+        AutomationState.getAutomationState().start(
                 subModule.moduleId(),
                 resolveModuleName(subModule.moduleId()),
                 subModule.id(),
@@ -167,7 +171,7 @@ public class DashboardController {
 
     @FXML
     private void handleLogout() {
-        AppState.getInstance().clear();
+        AppState.getAppState().clearSession();
         log.info("[Dashboard] User logged out.");
         SceneRouter.navigateTo("/auth/login-view.fxml");
     }

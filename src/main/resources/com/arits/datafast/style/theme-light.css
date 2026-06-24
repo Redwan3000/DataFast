@@ -1,0 +1,159 @@
+.main-root {
+    -fx-background-color: #f1f3f3;
+    -fx-font-family: "Inter";
+}
+
+.login-background {
+    -fx-background-color: #f1f3f3;
+}
+
+.brand-header-container {
+    -fx-background-color: #FFFFFF;
+}
+
+.navbar {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.navbar-icon {
+    -fx-icon-color: #334155;
+}
+
+.login-card {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #e5e7eb;
+    -fx-effect: dropshadow(three-pass-box, rgba(15, 23, 42, 0.06), 12, 0, 0, 6);
+}
+
+.brand-title, .card-main-heading, .brand-text-dark {
+    -fx-text-fill: #1a1a1a;
+}
+
+.card-sub-heading {
+    -fx-text-fill: #6b7280;
+}
+
+.input-field-label {
+    -fx-text-fill: #374151;
+}
+
+.custom-input-field {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #d1d5db;
+    -fx-text-fill: #1a1a1a;
+    -fx-prompt-text-fill: #9ca3af;
+}
+
+.custom-input-field:focused {
+    -fx-border-color: #1aa5e4;
+}
+
+.input-field-inner {
+    -fx-text-fill: #1a1a1a;
+}
+
+.input-icon {
+    -fx-icon-color: #9ca3af;
+}
+
+.primary-login-btn {
+    -fx-background-color: #1aa5e4;
+    -fx-text-fill: #ffffff;
+}
+
+.primary-login-btn:hover {
+    -fx-background-color: #0ea5e9;
+}
+
+.forgot-password-link {
+    -fx-text-fill: #6b7280;
+}
+
+.forgot-password-link:hover {
+    -fx-text-fill: #1aa5e4;
+}
+
+.otp-box {
+    -fx-text-fill: #1a1a1a;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #d1d5db;
+}
+
+.otp-box:focused {
+    -fx-border-color: #1aa5e4;
+}
+
+.otp-icon-circle {
+    -fx-background-color: #E8F4F2;
+}
+
+.otp-lock-icon {
+    -fx-icon-color: #374151;
+}
+
+.password-requirements-box {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: #e5e7eb;
+}
+
+.requirements-heading {
+    -fx-text-fill: #1f2937;
+}
+
+.req-label {
+    -fx-text-fill: #6b7280;
+}
+
+.req-icon-pass {
+    -fx-icon-color: #22c55e;
+}
+
+.req-icon-fail {
+    -fx-icon-color: #cbd5e1;
+}
+
+.resend-link {
+    -fx-text-fill: #1aa5e4;
+}
+
+.footer-container {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #e5e7eb transparent transparent transparent;
+}
+
+.footer-text {
+    -fx-text-fill: #9ca3af;
+}
+
+.error-message-label {
+    -fx-background-color: #fef2f2;
+    -fx-border-color: #fecaca;
+    -fx-text-fill: #b91c1c;
+}
+
+.error-banner-icon, .error-banner-text {
+    -fx-icon-color: #b91c1c;
+    -fx-text-fill: #b91c1c;
+}
+
+.dashboard-scroll-pane {
+    -fx-background: #EBEBEB;
+}
+
+.dashboard-scroll-pane > .viewport {
+    -fx-background-color: #EBEBEB;
+}
+
+.dashboard-content {
+    -fx-background-color: #EBEBEB;
+}
+
+.runner-content {
+    -fx-background-color: #EBEBEB;
+}
+
+.sub-module-row-selected .sub-module-arrow {
+    -fx-icon-color: white;
+}

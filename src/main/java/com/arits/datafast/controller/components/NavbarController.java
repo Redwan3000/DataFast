@@ -10,9 +10,12 @@ import javafx.scene.layout.HBox; // or VBox depending on your navbar layout
 
 public class NavbarController {
 
-    @FXML private HBox root; // Ensure this matches the fx:id in your navbar-view.fxml
-    @FXML private Button backBtn;
-    @FXML private Button forwardBtn;
+    @FXML
+    private HBox root; // Ensure this matches the fx:id in your navbar-view.fxml
+    @FXML
+    private Button backBtn;
+    @FXML
+    private Button forwardBtn;
 
     @FXML
     public void initialize() {
@@ -38,7 +41,7 @@ public class NavbarController {
 
     @FXML
     private void handleHome() {
-        if (AppState.getInstance().isLoggedIn()) {
+        if (AppState.getAppState().isLoggedIn()) {
             SceneRouter.navigateTo("/dashboard/dashboard-view.fxml");
         } else {
             SceneRouter.navigateTo("/auth/login-view.fxml");
@@ -62,7 +65,7 @@ public class NavbarController {
 
     @FXML
     private void handleLogout() {
-        AppState.getInstance().clear();
+        AppState.getAppState().clearSession();
         SceneRouter.navigateTo("/auth/login-view.fxml");
     }
 }

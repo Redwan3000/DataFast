@@ -51,7 +51,7 @@ public class ForgetPasswordController {
         errorHelper.hideError();
         setFormEnabled(false);
 
-        AppState.getInstance().setTempEmail(email);
+        AppState.getAppState().setTempEmail(email);
 
         new Thread(() -> {
             long start = System.currentTimeMillis();

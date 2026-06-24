@@ -134,8 +134,8 @@ public class AuthService {
             throw new Exception("Invalid credentials. Please try again.");
         }
 
-        String token    = data.results().token();
-        String rawName  = data.results().userData().name();
+        String token = data.results().token();
+        String rawName = data.results().userData().name();
         String rawEmail = data.results().userData().email();
         String rawPhone = data.results().userData().phoneNumber();
 
@@ -151,7 +151,7 @@ public class AuthService {
                 data.results().userData().company().address()
         );
 
-        AppState.getInstance().setSession(token, response.getBody(), sessionData);
+        AppState.getAppState().setSession(token, response.getBody(), sessionData);
         log.info("[Auth] Session established for userId={}", sessionData.userId());
     }
 
@@ -169,7 +169,7 @@ public class AuthService {
     }
 
     // -------------------------------------------------------------------------
-    // Forgot password — step 1: request OTP
+    // Forgot password
     // -------------------------------------------------------------------------
 
     public void requestOtp(String email) throws Exception {
@@ -195,7 +195,7 @@ public class AuthService {
     }
 
     // -------------------------------------------------------------------------
-    // Forgot password — step 2: reset with OTP + new password
+    // Reset password
     // -------------------------------------------------------------------------
 
     public void resetPassword(String email, String otp, String password) throws Exception {

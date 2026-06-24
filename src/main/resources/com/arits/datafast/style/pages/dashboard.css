@@ -1,0 +1,11 @@
+.section-heading {
+    -fx-text-fill: #888888;
+}
+
+.loading-label {
+    -fx-text-fill: #888888;
+}
+
+.loading-spinner-icon {
+    -fx-icon-color: #888888;
+}

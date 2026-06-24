@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.HBox?>
-
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 <BorderPane xmlns:fx="http://fxml"
             xmlns="http://javafx.com/javafx"
             fx:controller="com.arits.datafast.controller.auth.LoginController"
-            stylesheets="@../../style/application.css"
+            stylesheets="@../../style/pages/login.css"
             prefHeight="700.0" prefWidth="900.0"
             styleClass="main-root">
 
@@ -42,13 +33,13 @@
                     <Label text="Sign in to your DataFast account to continue" styleClass="card-sub-heading"/>
                 </VBox>
 
-<!--      error  label -->
+                <!--      error  label -->
                 <HBox fx:id="errorBanner" styleClass="error-message-label" alignment="CENTER_LEFT"
                       spacing="8.0" managed="false" visible="false">
                     <FontIcon iconLiteral="gmi-error" iconSize="16" styleClass="error-banner-icon"/>
                     <Label fx:id="errorLabel" styleClass="error-banner-text" wrapText="true"/>
                 </HBox>
-<!--input fields-->
+                <!--input fields-->
                 <VBox spacing="16.0" alignment="TOP_LEFT">
                     <VBox spacing="6.0">
                         <Label text="Email" styleClass="input-field-label"/>
@@ -74,7 +65,8 @@
                     </VBox>
                 </VBox>
 
-                <Button fx:id="loginButton" text=" Login" maxWidth="Infinity" onAction="#handleLogin" styleClass="primary-login-btn">
+                <Button fx:id="loginButton" text=" Login" maxWidth="Infinity" onAction="#handleLogin"
+                        styleClass="primary-login-btn">
                     <graphic>
                         <FontIcon iconLiteral="fth-log-in" iconSize="16" iconColor="WHITE"/>
                     </graphic>

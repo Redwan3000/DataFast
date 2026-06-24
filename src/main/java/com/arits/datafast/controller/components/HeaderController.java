@@ -1,16 +1,18 @@
 package com.arits.datafast.controller.components;
 
 import com.arits.datafast.theme.ThemeManager;
-import javafx.fxml.FXML;
-import org.kordamp.ikonli.javafx.FontIcon;
 import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class HeaderController {
 
-    @FXML private HBox root;
-    @FXML private FontIcon themeIcon;
+    @FXML
+    private HBox root;
+    @FXML
+    private FontIcon themeIcon;
 
     @FXML
     public void initialize() {
@@ -34,7 +36,7 @@ public class HeaderController {
 
     @FXML
     private void handleThemeToggle() {
-        ThemeManager.toggle();
+        ThemeManager.toggle(root.getScene());
         updateIcon();
     }
 

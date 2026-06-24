@@ -1,0 +1,29 @@
+.main-root {
+    -fx-font-family: "Inter";
+}
+
+.brand-header-container {
+    -fx-padding: 16px 24px;
+}
+
+.footer-container {
+    -fx-border-width: 1px;
+    -fx-padding: 24px 0 12px 0;
+}
+
+.footer-text {
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+}
+
+.dashboard-scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.dashboard-content {
+    -fx-background-color: transparent;
+}
+
+.runner-content {
+    -fx-background-color: transparent;
+}

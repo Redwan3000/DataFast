@@ -1,8 +1,7 @@
 package com.arits.datafast.controller.automation;
 
-import com.arits.datafast.dto.automation.AutomationModuleDto;
 import com.arits.datafast.routing.SceneRouter;
-import com.arits.datafast.state.AutomationContext;
+import com.arits.datafast.state.AutomationState;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.DragEvent;
@@ -18,15 +17,15 @@ import java.util.List;
 
 /**
  * Controller for automation-runner-view.fxml — Step 1: Upload.
- *
+ * <p>
  * Receives context (module + subModule) from DashboardController via
  * AutomationContext before the scene loads.
- *
+ * <p>
  * Responsibilities:
- *   - Populate breadcrumb and page title from context
- *   - Accept an Excel file via file picker or drag-and-drop
- *   - Validate extension (.xlsx / .xlsm / .xls)
- *   - Store the chosen file in AutomationContext and navigate to Step 2
+ * - Populate breadcrumb and page title from context
+ * - Accept an Excel file via file picker or drag-and-drop
+ * - Validate extension (.xlsx / .xlsm / .xls)
+ * - Store the chosen file in AutomationContext and navigate to Step 2
  */
 public class AutomationRunnerController {
 
@@ -36,16 +35,22 @@ public class AutomationRunnerController {
             List.of(".xlsx", ".xlsm", ".xls");
 
     // ── Breadcrumb ──────────────────────────────────────────────────────────
-    @FXML private Label breadcrumbModule;
-    @FXML private Label breadcrumbAutomationGroup;
-    @FXML private Label breadcrumbCurrent;
+    @FXML
+    private Label breadcrumbModule;
+    @FXML
+    private Label breadcrumbAutomationGroup;
+    @FXML
+    private Label breadcrumbCurrent;
 
     // ── Page title ──────────────────────────────────────────────────────────
-    @FXML private Label automationNameLabel;
-    @FXML private Label automationDescLabel;
+    @FXML
+    private Label automationNameLabel;
+    @FXML
+    private Label automationDescLabel;
 
     // ── Drop zone ───────────────────────────────────────────────────────────
-    @FXML private StackPane dropZone;
+    @FXML
+    private StackPane dropZone;
 
     // -------------------------------------------------------------------------
     // Lifecycle
@@ -53,7 +58,7 @@ public class AutomationRunnerController {
 
     @FXML
     public void initialize() {
-        AutomationContext ctx = AutomationContext.getInstance();
+        AutomationState ctx = AutomationState.getAutomationState();
 
         // Breadcrumb
         breadcrumbModule.setText(ctx.getModuleName());
@@ -158,7 +163,7 @@ public class AutomationRunnerController {
         log.info("[Upload] File accepted: {}", file.getAbsolutePath());
 
         // Store in context so Step 2 (Map Columns) can read it
-        AutomationContext.getInstance().setSelectedFile(file);
+        AutomationState.getAutomationState().setSelectedFile(file);
 
         // Advance to Step 2
         SceneRouter.navigateTo("/automation/map-columns-view.fxml");
@@ -173,7 +178,10 @@ public class AutomationRunnerController {
         dropZone.getStyleClass().add("drop-zone-error");
         // Remove error style after 2 seconds
         new Thread(() -> {
-            try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ignored) {
+            }
             javafx.application.Platform.runLater(() ->
                     dropZone.getStyleClass().remove("drop-zone-error")
             );

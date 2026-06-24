@@ -1,0 +1,100 @@
+/* Inputs */
+.custom-input-field {
+    -fx-border-width: 1px;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 0 12 0 12;
+}
+
+.input-field-inner {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 10 5 10 5;
+}
+
+.input-field-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+
+/* Buttons */
+.primary-login-btn {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 12px;
+    -fx-cursor: hand;
+    -fx-text-fill: #ffffff;
+}
+
+.theme-toggle-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-padding: 6;
+    -fx-border-color: transparent;
+}
+
+.theme-toggle-btn:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 6;
+}
+
+/* Cards */
+.login-card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 12px;
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(15, 23, 42, 0.05), 15, 0, 0, 8);
+}
+
+.card-main-heading {
+    -fx-font-size: 23.04px;
+    -fx-font-weight: 700;
+}
+
+.card-sub-heading {
+    -fx-font-size: 14px;
+}
+
+/* Error banner */
+.error-message-label {
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 14 10 14;
+    -fx-font-size: 13px;
+    -fx-max-width: Infinity;
+}
+
+.error-banner-text {
+    -fx-font-size: 13px;
+}
+
+/* Logo */
+.logo-icon-box {
+    -fx-background-color: #0066ff;
+    -fx-background-radius: 8px;
+    -fx-min-width: 36px;
+    -fx-min-height: 36px;
+    -fx-max-width: 36px;
+    -fx-max-height: 36px;
+}
+
+.logo-svg-vector {
+    -fx-fill: #0062FB;
+    -fx-stroke: #ffffff;
+    -fx-stroke-width: 2.5px;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.brand-text-dark {
+    -fx-font-size: 20px;
+    -fx-font-weight: 600;
+}
+
+.brand-text-blue {
+    -fx-font-size: 20px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #4a6cf7;
+}

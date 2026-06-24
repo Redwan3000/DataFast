@@ -1,0 +1,14 @@
+.brand-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.section-heading {
+    -fx-font-size: 13px;
+    -fx-font-weight: normal;
+    -fx-font-family: "System";
+}
+
+.loading-label {
+    -fx-font-size: 13px;
+}

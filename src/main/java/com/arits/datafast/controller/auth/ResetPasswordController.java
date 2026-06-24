@@ -80,9 +80,6 @@ public class ResetPasswordController {
     }
 
 
-
-
-
     private void setupOtpBox(TextField current, TextField prev, TextField next) {
         current.textProperty().addListener((obs, oldVal, newVal) -> {
             // Only allow single digit
@@ -152,7 +149,7 @@ public class ResetPasswordController {
 
     @FXML
     private void handleResendOtp() {
-        String email = AppState.getInstance().getTempEmail();
+        String email = AppState.getAppState().getTempEmail();
         new Thread(() -> {
             try {
                 authService.requestOtp(email);
@@ -189,7 +186,7 @@ public class ResetPasswordController {
                 + otp4.getText() + otp5.getText() + otp6.getText();
         String password = newPasswordHidden.getText();
         String confirm = confirmPasswordHidden.getText();
-        String email = AppState.getInstance().getTempEmail();
+        String email = AppState.getAppState().getTempEmail();
 
         if (otp.length() < 6) {
             errorHelper.showError("Please enter the complete 6-digit OTP.");
@@ -207,7 +204,7 @@ public class ResetPasswordController {
         new Thread(() -> {
             try {
                 authService.resetPassword(email, otp, password);
-                AppState.getInstance().setTempEmail(null);
+                AppState.getAppState().setTempEmail(null);
                 Platform.runLater(() ->
                         SceneRouter.navigateTo("/auth/login-view.fxml")
                 );

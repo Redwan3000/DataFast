@@ -4,8 +4,6 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,29 +11,24 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Manages browser lifecycle for DataFast automation sessions.
- */
 
-@NoArgsConstructor
-@AllArgsConstructor
 public class BrowserManager {
-
     private static final String BUNDLED_CHROMIUM_LINUX =
             System.getProperty("user.home")
                     + "/.cache/ms-playwright/chromium-1223/chrome-linux/chrome";
-
     private static final String BUNDLED_CHROMIUM_MAC =
             System.getProperty("user.home")
                     + "/Library/Caches/ms-playwright/chromium-1223/"
                     + "chrome-mac/Chromium.app/Contents/MacOS/Chromium";
-
     private static final String BUNDLED_CHROMIUM_WIN =
             System.getProperty("user.home")
                     + "\\AppData\\Local\\ms-playwright\\chromium-1223\\chrome-win\\chrome.exe";
-
     private static final Path TEMP_PROFILE_DIR =
             Paths.get(System.getProperty("java.io.tmpdir"), "datafast-chrome-profile");
+
+    public BrowserManager() {
+        // or maybe private BrowserManager() {
+    }
 
     public static BrowserSession launch(String startUrl) {
         String executablePath = resolveExecutablePath();
@@ -142,9 +135,18 @@ public class BrowserManager {
 
         @Override
         public void close() {
-            try { page.close(); } catch (Exception ignored) {}
-            try { context.close(); } catch (Exception ignored) {}
-            try { playwright.close(); } catch (Exception ignored) {}
+            try {
+                page.close();
+            } catch (Exception ignored) {
+            }
+            try {
+                context.close();
+            } catch (Exception ignored) {
+            }
+            try {
+                playwright.close();
+            } catch (Exception ignored) {
+            }
         }
     }
 }

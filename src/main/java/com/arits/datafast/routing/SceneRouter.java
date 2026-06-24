@@ -1,5 +1,6 @@
 package com.arits.datafast.routing;
 
+import com.arits.datafast.theme.ThemeManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ public class SceneRouter {
 
     private static final Deque<String> backStack = new ArrayDeque<>();
     private static final Deque<String> forwardStack = new ArrayDeque<>();
+
     private static String currentPath;
     private static Stage primaryStage;
 
@@ -20,17 +22,13 @@ public class SceneRouter {
         primaryStage = stage;
     }
 
-//to navigate to any page/fxml
     public static void navigateTo(String fxmlPath) {
-        if (currentPath != null) {
-            backStack.push(currentPath);
-        }
+        if (currentPath != null) backStack.push(currentPath);
         forwardStack.clear();
         currentPath = fxmlPath;
         load(fxmlPath);
     }
 
-    //navbar back arrow button
     public static void navigateBack() {
         if (backStack.isEmpty()) return;
         forwardStack.push(currentPath);
@@ -38,7 +36,6 @@ public class SceneRouter {
         load(currentPath);
     }
 
-//    navbar front arrow button
     public static void navigateForward() {
         if (forwardStack.isEmpty()) return;
         backStack.push(currentPath);
@@ -46,16 +43,17 @@ public class SceneRouter {
         load(currentPath);
     }
 
-
-//    navbar refresh button
     public static void refresh() {
-        if (currentPath != null) {
-            load(currentPath);
-        }
+        if (currentPath != null) load(currentPath);
     }
 
-    public static boolean canGoBack()    { return !backStack.isEmpty(); }
-    public static boolean canGoForward() { return !forwardStack.isEmpty(); }
+    public static boolean canGoBack() {
+        return !backStack.isEmpty();
+    }
+
+    public static boolean canGoForward() {
+        return !forwardStack.isEmpty();
+    }
 
     private static void load(String fxmlPath) {
         try {
@@ -65,21 +63,23 @@ public class SceneRouter {
 
             URL resourceUrl = SceneRouter.class.getResource(fullPath);
             if (resourceUrl == null) {
-                throw new RuntimeException("Could not find FXML file: " + fullPath);
+                throw new RuntimeException("FXML not found: " + fullPath);
             }
 
             FXMLLoader loader = new FXMLLoader(resourceUrl);
             Parent root = loader.load();
 
             if (primaryStage.getScene() == null) {
-                primaryStage.setScene(new Scene(root));
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                ThemeManager.apply(scene);
             } else {
                 primaryStage.getScene().setRoot(root);
+                ThemeManager.apply(primaryStage.getScene());
             }
 
-            com.arits.datafast.theme.ThemeManager.applyToRoot(root);
         } catch (Exception e) {
-            System.err.println("Router Error: " + e.getMessage());
+            System.err.println("SceneRouter error: " + e.getMessage());
             e.printStackTrace();
         }
     }
