@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.TextFlow?>
+<?import org.kordamp.ikonli.javafx.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="com.arits.datafast.controller.automation.ReviewRunController"
+            stylesheets="@../../style/pages/runner.css, @../../style/pages/review-run.css"
+            styleClass="main-root">
+
+    <top>
+        <VBox>
+            <fx:include source="../../components/header-view.fxml"/>
+            <fx:include source="../../components/navbar-view.fxml"/>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="dashboard-scroll-pane"
+                    hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+            <StackPane alignment="TOP_CENTER">
+                <VBox styleClass="dashboard-content" spacing="24.0" maxWidth="1320"
+                      StackPane.alignment="TOP_CENTER">
+                    <padding>
+                        <Insets top="40" right="24" bottom="40" left="24"/>
+                    </padding>
+                    <HBox styleClass="breadcrumb-bar" alignment="CENTER_LEFT" spacing="6.0">
+                        <Label fx:id="breadcrumbDashboard" text="Dashboard"
+                               styleClass="breadcrumb-link" onMouseClicked="#handleBreadcrumbDashboard"/>
+                        <FontIcon iconLiteral="gmi-chevron-right" iconSize="14" styleClass="breadcrumb-sep"/>
+                        <Label fx:id="breadcrumbModule" styleClass="breadcrumb-link"
+                               onMouseClicked="#handleBreadcrumbModule"/>
+                        <FontIcon iconLiteral="gmi-chevron-right" iconSize="14" styleClass="breadcrumb-sep"/>
+                        <Label fx:id="breadcrumbAutomationGroup" styleClass="breadcrumb-link"/>
+                        <FontIcon iconLiteral="gmi-chevron-right" iconSize="14" styleClass="breadcrumb-sep"/>
+                        <Label fx:id="breadcrumbCurrent" styleClass="breadcrumb-current"/>
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="14.0">
+                        <VBox.margin>
+                            <Insets top="12" bottom="28"/>
+                        </VBox.margin>
+                        <StackPane styleClass="runner-title-icon-wrap">
+                            <FontIcon iconLiteral="gmi-flash-on" iconSize="22" styleClass="runner-title-icon"/>
+                        </StackPane>
+                        <VBox spacing="3.0">
+                            <Label fx:id="automationNameLabel" styleClass="runner-title"/>
+                            <Label fx:id="automationDescLabel" styleClass="runner-subtitle"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox styleClass="step-bar" alignment="CENTER_LEFT" spacing="0">
+                        <VBox.margin>
+                            <Insets bottom="28"/>
+                        </VBox.margin>
+
+                        <HBox styleClass="step-item" alignment="CENTER_LEFT" spacing="8.0">
+                            <StackPane styleClass="step-circle step-circle-done">
+                                <FontIcon iconLiteral="gmi-check" iconSize="15" styleClass="step-icon step-icon-done"/>
+                            </StackPane>
+                            <Label text="Upload" styleClass="step-label step-label-done"/>
+                        </HBox>
+                        <Region styleClass="step-line step-line-done" HBox.hgrow="ALWAYS"/>
+
+                        <HBox styleClass="step-item" alignment="CENTER_LEFT" spacing="8.0">
+                            <StackPane styleClass="step-circle step-circle-done">
+                                <FontIcon iconLiteral="gmi-check" iconSize="15" styleClass="step-icon step-icon-done"/>
+                            </StackPane>
+                            <Label text="Map Columns" styleClass="step-label step-label-done"/>
+                        </HBox>
+                        <Region styleClass="step-line step-line-done" HBox.hgrow="ALWAYS"/>
+
+                        <HBox styleClass="step-item" alignment="CENTER_LEFT" spacing="8.0">
+                            <StackPane styleClass="step-circle step-circle-active">
+                                <FontIcon iconLiteral="gmi-flash-on" iconSize="15"
+                                          styleClass="step-icon step-icon-active"/>
+                            </StackPane>
+                            <Label text="Run" styleClass="step-label step-label-active"/>
+                        </HBox>
+                    </HBox>
+
+                    <VBox styleClass="mapping-card">
+
+                        <HBox styleClass="file-info-bar" alignment="CENTER_LEFT" spacing="10.0">
+                            <FontIcon iconLiteral="gmi-description" iconSize="18" styleClass="file-info-icon"/>
+                            <Label fx:id="fileInfoLabel" styleClass="file-info-text"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="Change file" styleClass="btn-link" onAction="#handleChangeFile"/>
+                        </HBox>
+
+                        <VBox fx:id="reviewView" spacing="16.0">
+                            <VBox spacing="3.0">
+                                <Label text="Review &amp; run" styleClass="mapping-title"/>
+                                <Label text="Confirm the starting row, then start the automation."
+                                       styleClass="mapping-subtitle"/>
+                            </VBox>
+
+                            <HBox styleClass="review-summary-grid" spacing="0">
+                                <VBox styleClass="review-summary-cell" spacing="4.0">
+                                    <Label text="File" styleClass="review-summary-label"/>
+                                    <Label fx:id="reviewFileLabel" styleClass="review-summary-value"/>
+                                </VBox>
+                                <VBox styleClass="review-summary-cell" spacing="4.0">
+                                    <Label text="Sheet" styleClass="review-summary-label"/>
+                                    <Label fx:id="reviewSheetLabel" styleClass="review-summary-value"/>
+                                </VBox>
+                                <VBox styleClass="review-summary-cell" spacing="4.0">
+                                    <Label text="Rows" styleClass="review-summary-label"/>
+                                    <Label fx:id="reviewRowsLabel" styleClass="review-summary-value"/>
+                                </VBox>
+                                <VBox styleClass="review-summary-cell" spacing="4.0">
+                                    <Label text="Fields mapped" styleClass="review-summary-label"/>
+                                    <Label fx:id="reviewFieldsLabel" styleClass="review-summary-value"/>
+                                </VBox>
+                            </HBox>
+
+                            <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="start-row-bar">
+                                <Label text="Start row" styleClass="start-row-label"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <TextField fx:id="startRowField" styleClass="start-row-field"/>
+                            </HBox>
+
+                            <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                <Button text="  Back to mapping" styleClass="btn-secondary"
+                                        onAction="#handleBackToMapping">
+                                    <graphic>
+                                        <FontIcon iconLiteral="gmi-arrow-back" iconSize="14"/>
+                                    </graphic>
+                                </Button>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="startAutomationButton" text="  Start Automation"
+                                        styleClass="btn-primary" onAction="#handleStartAutomation">
+                                    <graphic>
+                                        <FontIcon iconLiteral="gmi-flash-on" iconSize="14"/>
+                                    </graphic>
+                                </Button>
+                            </HBox>
+                        </VBox>
+
+                        <VBox fx:id="logView" spacing="0" visible="false" managed="false">
+                            <HBox alignment="CENTER_LEFT" styleClass="log-header-bar">
+                                <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                    <Region styleClass="log-status-dot"/>
+                                    <Label text="Automation log" styleClass="mapping-title"/>
+                                </HBox>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="logStatusLabel" text="Running..." styleClass="log-status-running"/>
+                            </HBox>
+
+                            <ScrollPane fx:id="logScrollPane" fitToWidth="true" styleClass="log-scroll-pane"
+                                        hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+                                <TextFlow fx:id="logFlow" styleClass="log-terminal"/>
+                            </ScrollPane>
+                        </VBox>
+
+                    </VBox>
+
+                </VBox>
+            </StackPane>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <fx:include source="../../components/footer-view.fxml"/>
+    </bottom>
+
+</BorderPane>

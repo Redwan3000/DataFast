@@ -1,8 +1,11 @@
 package com.arits.datafast.controller.automation;
 
 import com.arits.datafast.routing.SceneRouter;
+import com.arits.datafast.service.excel.ExcelService;
 import com.arits.datafast.state.AutomationState;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -15,26 +18,16 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.List;
 
-/**
- * Controller for automation-runner-view.fxml — Step 1: Upload.
- * <p>
- * Receives context (module + subModule) from DashboardController via
- * AutomationContext before the scene loads.
- * <p>
- * Responsibilities:
- * - Populate breadcrumb and page title from context
- * - Accept an Excel file via file picker or drag-and-drop
- * - Validate extension (.xlsx / .xlsm / .xls)
- * - Store the chosen file in AutomationContext and navigate to Step 2
- */
-public class AutomationRunnerController {
 
-    private static final Logger log = LoggerFactory.getLogger(AutomationRunnerController.class);
+public class UploadController {
+
+    private static final Logger log = LoggerFactory.getLogger(UploadController.class);
 
     private static final List<String> ACCEPTED_EXTENSIONS =
             List.of(".xlsx", ".xlsm", ".xls");
 
-    // ── Breadcrumb ──────────────────────────────────────────────────────────
+    private final ExcelService excelService = new ExcelService();
+
     @FXML
     private Label breadcrumbModule;
     @FXML
@@ -42,37 +35,40 @@ public class AutomationRunnerController {
     @FXML
     private Label breadcrumbCurrent;
 
-    // ── Page title ──────────────────────────────────────────────────────────
     @FXML
     private Label automationNameLabel;
     @FXML
     private Label automationDescLabel;
 
-    // ── Drop zone ───────────────────────────────────────────────────────────
     @FXML
     private StackPane dropZone;
+    @FXML
+    private Button chooseFileButton;
 
-    // -------------------------------------------------------------------------
-    // Lifecycle
-    // -------------------------------------------------------------------------
+    private boolean parsing = false;
+
 
     @FXML
     public void initialize() {
         AutomationState ctx = AutomationState.getAutomationState();
 
-        // Breadcrumb
+        if (ctx.getAutomationId() == 0) {
+            log.warn("[Upload] No automation selected — redirecting to dashboard.");
+            SceneRouter.navigateTo("/dashboard/dashboard-view.fxml");
+            return;
+        }
+
+
         breadcrumbModule.setText(ctx.getModuleName());
-        breadcrumbAutomationGroup.setText("EXP Automation");   // group label — refine later
+        breadcrumbAutomationGroup.setText("EXP Automation"); // group label — refine later
         breadcrumbCurrent.setText(ctx.getSubModuleName());
 
-        // Title
         automationNameLabel.setText(ctx.getSubModuleName());
         automationDescLabel.setText(ctx.getSubModuleDescription());
-    }
 
-    // -------------------------------------------------------------------------
-    // Breadcrumb navigation
-    // -------------------------------------------------------------------------
+
+        ctx.clearUploadedFileData();
+    }
 
     @FXML
     private void handleBreadcrumbDashboard() {
@@ -83,10 +79,6 @@ public class AutomationRunnerController {
     private void handleBreadcrumbModule() {
         SceneRouter.navigateBack();
     }
-
-    // -------------------------------------------------------------------------
-    // File chooser (button click)
-    // -------------------------------------------------------------------------
 
     @FXML
     private void handleChooseFile() {
@@ -99,18 +91,11 @@ public class AutomationRunnerController {
                 )
         );
 
-        File file = chooser.showOpenDialog(
-                SceneRouter.getPrimaryStage()
-        );
-
+        File file = chooser.showOpenDialog(SceneRouter.getPrimaryStage());
         if (file != null) {
             processFile(file);
         }
     }
-
-    // -------------------------------------------------------------------------
-    // Drag-and-drop handlers
-    // -------------------------------------------------------------------------
 
     @FXML
     private void handleDragOver(DragEvent event) {
@@ -141,7 +126,7 @@ public class AutomationRunnerController {
         boolean success = false;
 
         if (db.hasFiles()) {
-            File file = db.getFiles().get(0);   // take first file only
+            File file = db.getFiles().get(0);
             if (isValidExtension(file)) {
                 processFile(file);
                 success = true;
@@ -160,13 +145,39 @@ public class AutomationRunnerController {
     // -------------------------------------------------------------------------
 
     private void processFile(File file) {
+        if (parsing) return; // ignore double-clicks/drops mid-parse
+        if (!isValidExtension(file)) {
+            showDropZoneError();
+            return;
+        }
+
+        parsing = true;
+        chooseFileButton.setDisable(true);
         log.info("[Upload] File accepted: {}", file.getAbsolutePath());
 
-        // Store in context so Step 2 (Map Columns) can read it
-        AutomationState.getAutomationState().setSelectedFile(file);
+        new Thread(() -> {
+            try {
+                ExcelService.ParsedExcel parsed = excelService.parse(file);
 
-        // Advance to Step 2
-        SceneRouter.navigateTo("/automation/map-columns-view.fxml");
+                Platform.runLater(() -> {
+                    AutomationState ctx = AutomationState.getAutomationState();
+                    ctx.setSelectedFile(file);
+                    ctx.setSheetName(parsed.sheetName());
+                    ctx.setExcelHeaders(parsed.headers());
+                    ctx.setExcelRows(parsed.rows());
+
+                    SceneRouter.navigateTo("/automation/map-columns-view.fxml");
+                });
+
+            } catch (Exception e) {
+                log.error("[Upload] Failed to read Excel file '{}': {}", file.getName(), e.getMessage(), e);
+                Platform.runLater(() -> {
+                    parsing = false;
+                    chooseFileButton.setDisable(false);
+                    showDropZoneError();
+                });
+            }
+        }, "excel-parser").start();
     }
 
     private boolean isValidExtension(File file) {
@@ -176,15 +187,12 @@ public class AutomationRunnerController {
 
     private void showDropZoneError() {
         dropZone.getStyleClass().add("drop-zone-error");
-        // Remove error style after 2 seconds
         new Thread(() -> {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ignored) {
             }
-            javafx.application.Platform.runLater(() ->
-                    dropZone.getStyleClass().remove("drop-zone-error")
-            );
+            Platform.runLater(() -> dropZone.getStyleClass().remove("drop-zone-error"));
         }).start();
     }
 }

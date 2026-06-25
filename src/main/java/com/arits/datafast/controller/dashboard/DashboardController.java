@@ -154,7 +154,7 @@ public class DashboardController {
                 subModule.description()
         );
 
-        SceneRouter.navigateTo("/automation/automation-runner-view.fxml");
+        SceneRouter.navigateTo("/automation/upload-view.fxml");
     }
 
     private String resolveModuleName(int moduleId) {

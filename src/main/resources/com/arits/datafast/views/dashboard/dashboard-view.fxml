@@ -21,40 +21,43 @@
     <center>
         <ScrollPane fitToWidth="true" styleClass="dashboard-scroll-pane"
                     hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
-            <VBox styleClass="dashboard-content" spacing="24.0">
-                <padding>
-                    <Insets top="32" right="40" bottom="40" left="40"/>
-                </padding>
+            <StackPane alignment="TOP_CENTER">
+                <VBox styleClass="dashboard-content" spacing="24.0" maxWidth="1320"
+                      StackPane.alignment="TOP_CENTER">
+                    <padding>
+                        <Insets top="40" right="24" bottom="40" left="24"/>
+                    </padding>
 
-                <Label text="All Portals" styleClass="section-heading"/>
+                    <Label text="All Portals" styleClass="section-heading"/>
 
-                <!-- Spinner shown while API call is in flight -->
-                <HBox fx:id="loadingBox" alignment="CENTER_LEFT" spacing="10.0"
-                      visible="true" managed="true">
-                    <FontIcon iconLiteral="gmi-refresh" iconSize="18"
-                              styleClass="loading-spinner-icon"/>
-                    <Label text="Loading portals..." styleClass="loading-label"/>
-                </HBox>
+                    <!-- Spinner shown while API call iss in flight -->
+                    <HBox fx:id="loadingBox" alignment="CENTER_LEFT" spacing="10.0"
+                          visible="true" managed="true">
+                        <FontIcon iconLiteral="gmi-refresh" iconSize="18"
+                                  styleClass="loading-spinner-icon"/>
+                        <Label text="Loading portals..." styleClass="loading-label"/>
+                    </HBox>
 
-                <!-- Shown on API failure -->
-                <HBox fx:id="errorBanner" styleClass="error-message-label"
-                      alignment="CENTER_LEFT" spacing="8.0"
-                      visible="false" managed="false">
-                    <FontIcon iconLiteral="gmi-error" iconSize="16"
-                              styleClass="error-banner-icon"/>
-                    <Label fx:id="errorLabel" styleClass="error-banner-text"
-                           wrapText="true"/>
-                </HBox>
+                    <!-- Shown on API failure -->
+                    <HBox fx:id="errorBanner" styleClass="error-message-label"
+                          alignment="CENTER_LEFT" spacing="8.0"
+                          visible="false" managed="false">
+                        <FontIcon iconLiteral="gmi-error" iconSize="16"
+                                  styleClass="error-banner-icon"/>
+                        <Label fx:id="errorLabel" styleClass="error-banner-text"
+                               wrapText="true"/>
+                    </HBox>
 
-                <!-- Cards injected at runtime by DashboardController -->
-                <FlowPane fx:id="moduleGrid"
-                          styleClass="module-grid"
-                          hgap="20.0"
-                          vgap="20.0"
-                          visible="false"
-                          managed="false"/>
+                    <!-- Cards injected at runtime by DashboardController -->
+                    <FlowPane fx:id="moduleGrid"
+                              styleClass="module-grid"
+                              hgap="20.0"
+                              vgap="20.0"
+                              visible="false"
+                              managed="false"/>
 
-            </VBox>
+                </VBox>
+            </StackPane>
         </ScrollPane>
     </center>
 

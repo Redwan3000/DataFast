@@ -15,19 +15,26 @@ import org.kordamp.ikonli.javafx.FontIcon;
 public class LoginController {
 
     private final AuthService authService = new AuthService();
-    @FXML private TextField emailField;
-    @FXML private PasswordField passwordHiddenField;
-    @FXML private TextField passwordVisibleField;
-    @FXML private FontIcon passwordToggleIcon;
-    @FXML private Button loginButton;
-    @FXML private HBox errorBanner;
-    @FXML private Label errorLabel;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private PasswordField passwordHiddenField;
+    @FXML
+    private TextField passwordVisibleField;
+    @FXML
+    private FontIcon passwordToggleIcon;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private HBox errorBanner;
+    @FXML
+    private Label errorLabel;
     private boolean passwordVisible = false;
-private ErrorHelper errorHelper;
+    private ErrorHelper errorHelper;
 
     @FXML
     public void initialize() {
-        errorHelper= new ErrorHelper(errorBanner, errorLabel);
+        errorHelper = new ErrorHelper(errorBanner, errorLabel);
         passwordVisibleField.textProperty().bindBidirectional(passwordHiddenField.textProperty());
     }
 
@@ -43,7 +50,7 @@ private ErrorHelper errorHelper;
 
     @FXML
     private void handleLogin() {
-        String email    = emailField.getText().trim();
+        String email = emailField.getText().trim();
         String password = passwordHiddenField.getText();
 
         if (email.isEmpty()) {
@@ -86,7 +93,6 @@ private ErrorHelper errorHelper;
         loginButton.setText(enabled ? " Login" : " Authenticating...");
     }
 
-//    method to redirect forget password page
     @FXML
     private void handleForgotPassword() {
         SceneRouter.navigateTo("/auth/forget-password-view.fxml");

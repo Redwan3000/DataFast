@@ -1,0 +1,99 @@
+.review-summary-cell {
+    -fx-padding: 12 24;
+    -fx-pref-width: 180;
+}
+
+.review-summary-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.review-summary-value {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.start-row-bar {
+    -fx-padding: 4 0;
+}
+
+.start-row-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.start-row-field {
+    -fx-pref-width: 420;
+    -fx-border-width: 1;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+.start-row-field.input-error {
+    -fx-border-color: #e53935;
+}
+
+.log-header-bar {
+    -fx-padding: 14 16;
+    -fx-border-width: 1 1 0 1;
+    -fx-background-radius: 8 8 0 0;
+    -fx-border-radius: 8 8 0 0;
+}
+
+.log-status-dot {
+    -fx-min-width: 9;
+    -fx-min-height: 9;
+    -fx-max-width: 9;
+    -fx-max-height: 9;
+    -fx-background-radius: 100;
+    -fx-background-color: #22c55e;
+}
+
+.log-status-running {
+    -fx-font-size: 12px;
+}
+
+.log-status-success {
+    -fx-font-size: 12px;
+    -fx-text-fill: #22c55e;
+    -fx-font-weight: bold;
+}
+
+.log-status-error {
+    -fx-font-size: 12px;
+    -fx-text-fill: #ef4444;
+    -fx-font-weight: bold;
+}
+
+.log-scroll-pane {
+    -fx-pref-height: 420;
+    -fx-background-color: #0d1117;
+    -fx-border-width: 0 1 1 1;
+    -fx-border-radius: 0 0 8 8;
+}
+
+.log-terminal {
+    -fx-background-color: #0d1117;
+    -fx-padding: 16;
+    -fx-font-family: "Consolas", "Monospace";
+}
+
+.log-line-info {
+    -fx-fill: #4ade80;
+    -fx-font-size: 13px;
+}
+
+.log-line-success {
+    -fx-fill: #22c55e;
+    -fx-font-size: 13px;
+}
+
+.log-line-warn {
+    -fx-fill: #facc15;
+    -fx-font-size: 13px;
+}
+
+.log-line-error {
+    -fx-fill: #f87171;
+    -fx-font-size: 13px;
+}

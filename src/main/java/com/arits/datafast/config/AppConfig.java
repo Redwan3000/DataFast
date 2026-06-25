@@ -24,7 +24,6 @@ public class AppConfig {
 
     }
 
-
     public static synchronized AppConfig getAppConfig() {
         return (appConfig == null) ? (appConfig = new AppConfig()) : appConfig;
     }
@@ -40,6 +39,7 @@ public class AppConfig {
         } catch (Exception e) {
             log.error("[AppConfig] Critical Error: Failed to load properties from : {}", path, e);
         }
+
     }
 
 

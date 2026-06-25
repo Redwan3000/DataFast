@@ -1,6 +1,7 @@
 package com.arits.datafast.service.automation;
 
 import com.arits.datafast.dto.automation.AutomationModuleDto;
+import com.arits.datafast.dto.automation.FormFieldMappingDto;
 import com.arits.datafast.service.api.ApiClient;
 import com.arits.datafast.service.api.ApiEndpoints;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +31,26 @@ public class AutomationService {
 
         if (dto.statusCode() != 200 || dto.results() == null) {
             throw new Exception("Unexpected response from server while loading modules.");
+        }
+
+        return Collections.unmodifiableList(dto.results());
+    }
+
+
+    public List<FormFieldMappingDto.Mapping> fetchFieldMappings(int automationId, int companyId) throws Exception {
+        String url = ApiEndpoints.FormFieldMappings.listByAutomationAndCompany(automationId, companyId);
+        ApiClient.ApiResponse response = ApiClient.authenticatedGet(url);
+
+        log.debug("Field mappings response [{}]: {}", response.getCode(), response.getBody());
+
+        if (!response.isSuccess()) {
+            throw new Exception("Failed to load field mappings. Server returned: " + response.getCode());
+        }
+
+        FormFieldMappingDto dto = MAPPER.readValue(response.getBody(), FormFieldMappingDto.class);
+
+        if (dto.statusCode() != 200 || dto.results() == null) {
+            throw new Exception("Unexpected response from server while loading field mappings.");
         }
 
         return Collections.unmodifiableList(dto.results());

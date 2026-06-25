@@ -1,6 +1,7 @@
 .navbar {
     -fx-border-width: 0 0 1 0;
     -fx-min-height: 50px;
+    -fx-border-width: 1px;
 }
 
 .navbar-back-btn {

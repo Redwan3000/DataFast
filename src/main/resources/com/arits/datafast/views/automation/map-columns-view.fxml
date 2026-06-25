@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="com.arits.datafast.controller.automation.MapColumnsController"
+            stylesheets="@../../style/pages/runner.css, @../../style/pages/map-columns.css"
+            styleClass="main-root">
+
+    <top>
+        <VBox>
+            <fx:include source="../../components/header-view.fxml"/>
+            <fx:include source="../../components/navbar-view.fxml"/>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="dashboard-scroll-pane"
+                    hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+            <StackPane alignment="TOP_CENTER">
+                <VBox styleClass="dashboard-content" spacing="24.0" maxWidth="1320"
+                      StackPane.alignment="TOP_CENTER">
+                    <padding>
+                        <Insets top="40" right="24" bottom="40" left="24"/>
+                    </padding>
+                    <HBox styleClass="breadcrumb-bar" alignment="CENTER_LEFT" spacing="6.0">
+                        <Label fx:id="breadcrumbDashboard" text="Dashboard"
+                               styleClass="breadcrumb-link" onMouseClicked="#handleBreadcrumbDashboard"/>
+                        <FontIcon iconLiteral="gmi-chevron-right" iconSize="14" styleClass="breadcrumb-sep"/>
+                        <Label fx:id="breadcrumbModule" styleClass="breadcrumb-link"
+                               onMouseClicked="#handleBreadcrumbModule"/>
+                        <FontIcon iconLiteral="gmi-chevron-right" iconSize="14" styleClass="breadcrumb-sep"/>
+                        <Label fx:id="breadcrumbAutomationGroup" styleClass="breadcrumb-link"/>
+                        <FontIcon iconLiteral="gmi-chevron-right" iconSize="14" styleClass="breadcrumb-sep"/>
+                        <Label fx:id="breadcrumbCurrent" styleClass="breadcrumb-current"/>
+                    </HBox>
+
+                    <!-- ── Page title row ── -->
+                    <HBox alignment="CENTER_LEFT" spacing="14.0">
+                        <VBox.margin>
+                            <Insets top="12" bottom="28"/>
+                        </VBox.margin>
+                        <StackPane styleClass="runner-title-icon-wrap">
+                            <FontIcon iconLiteral="gmi-flash-on" iconSize="22" styleClass="runner-title-icon"/>
+                        </StackPane>
+                        <VBox spacing="3.0">
+                            <Label fx:id="automationNameLabel" styleClass="runner-title"/>
+                            <Label fx:id="automationDescLabel" styleClass="runner-subtitle"/>
+                        </VBox>
+                    </HBox>
+
+                    <!-- ── Step progress bar ── -->
+                    <HBox styleClass="step-bar" alignment="CENTER_LEFT" spacing="0">
+                        <VBox.margin>
+                            <Insets bottom="28"/>
+                        </VBox.margin>
+
+                        <!-- Step 1: Upload (done) -->
+                        <HBox styleClass="step-item" alignment="CENTER_LEFT" spacing="8.0">
+                            <StackPane styleClass="step-circle step-circle-done">
+                                <FontIcon iconLiteral="gmi-check" iconSize="15" styleClass="step-icon step-icon-done"/>
+                            </StackPane>
+                            <Label text="Upload" styleClass="step-label step-label-done"/>
+                        </HBox>
+
+                        <Region styleClass="step-line step-line-done" HBox.hgrow="ALWAYS"/>
+
+                        <!-- Step 2: Map Columns (active) -->
+                        <HBox styleClass="step-item" alignment="CENTER_LEFT" spacing="8.0">
+                            <StackPane styleClass="step-circle step-circle-active">
+                                <FontIcon iconLiteral="gmi-settings" iconSize="15"
+                                          styleClass="step-icon step-icon-active"/>
+                            </StackPane>
+                            <Label text="Map Columns" styleClass="step-label step-label-active"/>
+                        </HBox>
+
+                        <Region styleClass="step-line" HBox.hgrow="ALWAYS"/>
+
+                        <!-- Step 3: Run (pending) -->
+                        <HBox styleClass="step-item" alignment="CENTER_LEFT" spacing="8.0">
+                            <StackPane styleClass="step-circle step-circle-pending">
+                                <FontIcon iconLiteral="gmi-flash-on" iconSize="15"
+                                          styleClass="step-icon step-icon-pending"/>
+                            </StackPane>
+                            <Label text="Run" styleClass="step-label step-label-pending"/>
+                        </HBox>
+                    </HBox>
+
+                    <!-- ── Card ── -->
+                    <VBox styleClass="mapping-card">
+
+                        <HBox styleClass="file-info-bar" alignment="CENTER_LEFT" spacing="10.0">
+                            <FontIcon iconLiteral="gmi-description" iconSize="18" styleClass="file-info-icon"/>
+                            <Label fx:id="fileInfoLabel" styleClass="file-info-text"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button text="Change file" styleClass="btn-link" onAction="#handleChangeFile"/>
+                        </HBox>
+
+                        <HBox alignment="CENTER_LEFT" styleClass="mapping-section-header">
+                            <VBox spacing="3.0">
+                                <Label text="Map your columns" styleClass="mapping-title"/>
+                                <Label text="Match each field to a column from your Excel file."
+                                       styleClass="mapping-subtitle"/>
+                            </VBox>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <VBox alignment="CENTER_RIGHT" spacing="4.0">
+                                <Label fx:id="progressLabel" styleClass="mapping-progress-label"/>
+                                <ProgressBar fx:id="progressBar" styleClass="mapping-progress-bar" progress="0"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox styleClass="mapping-toolbar" alignment="CENTER_LEFT" spacing="10.0">
+                            <Button text="  Auto-match" styleClass="btn-auto-match" onAction="#handleAutoMatch">
+                                <graphic>
+                                    <FontIcon iconLiteral="gmi-autorenew" iconSize="15"/>
+                                </graphic>
+                            </Button>
+                            <TextField fx:id="filterField" promptText="Filter fields..." styleClass="filter-field"/>
+                        </HBox>
+
+                        <HBox styleClass="mapping-columns-header" alignment="CENTER_LEFT">
+                            <Label text="DATAFAST FIELD" styleClass="mapping-col-label" HBox.hgrow="ALWAYS"/>
+                            <Label text="YOUR EXCEL COLUMN" styleClass="mapping-col-label"/>
+                        </HBox>
+
+                        <VBox fx:id="fieldRowsContainer" styleClass="mapping-rows-container" spacing="0"/>
+
+                        <TitledPane fx:id="previewTitledPane" text="Preview of your file" expanded="false"
+                                    styleClass="preview-titled-pane">
+                            <VBox.margin>
+                                <Insets top="18" bottom="6"/>
+                            </VBox.margin>
+                        </TitledPane>
+
+                        <HBox styleClass="mapping-footer" alignment="CENTER_LEFT" spacing="12.0">
+                            <Label text="All fields must be mapped to continue." styleClass="mapping-footer-hint"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Button fx:id="saveMappingButton" text="Save mapping"
+                                    styleClass="btn-secondary" onAction="#handleSaveMapping"/>
+                            <Button fx:id="continueButton" text="Continue"
+                                    styleClass="btn-primary" onAction="#handleContinue"/>
+                        </HBox>
+
+                    </VBox>
+
+                </VBox>
+            </StackPane>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <fx:include source="../../components/footer-view.fxml"/>
+    </bottom>
+
+</BorderPane>

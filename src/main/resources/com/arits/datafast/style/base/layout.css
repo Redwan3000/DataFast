@@ -27,3 +27,7 @@
 .runner-content {
     -fx-background-color: transparent;
 }
+
+.page-content-padding {
+    -fx-padding: 28 24 48 24;
+}
