@@ -43,12 +43,12 @@
                         <VBox.margin>
                             <Insets top="12" bottom="28"/>
                         </VBox.margin>
-                        <StackPane styleClass="runner-title-icon-wrap">
-                            <FontIcon iconLiteral="gmi-flash-on" iconSize="22" styleClass="runner-title-icon"/>
+                        <StackPane styleClass="automation-title">
+                            <FontIcon iconLiteral="gmi-flash-on" iconSize="22" styleClass="automation-title-icon"/>
                         </StackPane>
                         <VBox spacing="3.0">
-                            <Label fx:id="automationNameLabel" styleClass="runner-title"/>
-                            <Label fx:id="automationDescLabel" styleClass="runner-subtitle"/>
+                            <Label fx:id="automationNameLabel" styleClass="automation-title-name"/>
+                            <Label fx:id="automationDescLabel" styleClass="automation-title-description"/>
                         </VBox>
                     </HBox>
 

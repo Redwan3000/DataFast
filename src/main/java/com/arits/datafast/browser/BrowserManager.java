@@ -13,16 +13,20 @@ import java.util.List;
 
 
 public class BrowserManager {
+
     private static final String BUNDLED_CHROMIUM_LINUX =
             System.getProperty("user.home")
                     + "/.cache/ms-playwright/chromium-1223/chrome-linux/chrome";
+
     private static final String BUNDLED_CHROMIUM_MAC =
             System.getProperty("user.home")
                     + "/Library/Caches/ms-playwright/chromium-1223/"
                     + "chrome-mac/Chromium.app/Contents/MacOS/Chromium";
+
     private static final String BUNDLED_CHROMIUM_WIN =
             System.getProperty("user.home")
                     + "\\AppData\\Local\\ms-playwright\\chromium-1223\\chrome-win\\chrome.exe";
+
     private static final Path TEMP_PROFILE_DIR =
             Paths.get(System.getProperty("java.io.tmpdir"), "datafast-chrome-profile");
 

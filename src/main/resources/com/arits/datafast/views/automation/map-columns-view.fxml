@@ -38,37 +38,40 @@
                         <Label fx:id="breadcrumbCurrent" styleClass="breadcrumb-current"/>
                     </HBox>
 
-                    <!-- ── Page title row ── -->
+
+                    <!--                    page title -->
+
                     <HBox alignment="CENTER_LEFT" spacing="14.0">
                         <VBox.margin>
                             <Insets top="12" bottom="28"/>
                         </VBox.margin>
-                        <StackPane styleClass="runner-title-icon-wrap">
-                            <FontIcon iconLiteral="gmi-flash-on" iconSize="22" styleClass="runner-title-icon"/>
+                        <StackPane styleClass="automation-title">
+                            <FontIcon iconLiteral="gmi-flash-on" iconSize="22" styleClass="automation-title-icon"/>
                         </StackPane>
                         <VBox spacing="3.0">
-                            <Label fx:id="automationNameLabel" styleClass="runner-title"/>
-                            <Label fx:id="automationDescLabel" styleClass="runner-subtitle"/>
+                            <Label fx:id="automationNameLabel" styleClass="automation-title-name"/>
+                            <Label fx:id="automationDescLabel" styleClass="automation-title-description"/>
                         </VBox>
                     </HBox>
 
-                    <!-- ── Step progress bar ── -->
+
+                    <!--                  steps progress bar-->
                     <HBox styleClass="step-bar" alignment="CENTER_LEFT" spacing="0">
                         <VBox.margin>
                             <Insets bottom="28"/>
                         </VBox.margin>
 
-                        <!-- Step 1: Upload (done) -->
-                        <HBox styleClass="step-item" alignment="CENTER_LEFT" spacing="8.0">
+                        <!--                        step 1: upload-->
+                        <HBox styleClass="steps-item" alignment="CENTER_LEFT" spacing="8.0">
                             <StackPane styleClass="step-circle step-circle-done">
                                 <FontIcon iconLiteral="gmi-check" iconSize="15" styleClass="step-icon step-icon-done"/>
                             </StackPane>
                             <Label text="Upload" styleClass="step-label step-label-done"/>
                         </HBox>
 
-                        <Region styleClass="step-line step-line-done" HBox.hgrow="ALWAYS"/>
+                        <Region styleClass="step-line" HBox.hgrow="ALWAYS"/>
 
-                        <!-- Step 2: Map Columns (active) -->
+                        <!--                        step 2: map columns-->
                         <HBox styleClass="step-item" alignment="CENTER_LEFT" spacing="8.0">
                             <StackPane styleClass="step-circle step-circle-active">
                                 <FontIcon iconLiteral="gmi-settings" iconSize="15"
@@ -79,7 +82,7 @@
 
                         <Region styleClass="step-line" HBox.hgrow="ALWAYS"/>
 
-                        <!-- Step 3: Run (pending) -->
+                        <!--                        step 3 : run-->
                         <HBox styleClass="step-item" alignment="CENTER_LEFT" spacing="8.0">
                             <StackPane styleClass="step-circle step-circle-pending">
                                 <FontIcon iconLiteral="gmi-flash-on" iconSize="15"
@@ -89,7 +92,7 @@
                         </HBox>
                     </HBox>
 
-                    <!-- ── Card ── -->
+                    <!--                   mapping card-->
                     <VBox styleClass="mapping-card">
 
                         <HBox styleClass="file-info-bar" alignment="CENTER_LEFT" spacing="10.0">
@@ -99,18 +102,24 @@
                             <Button text="Change file" styleClass="btn-link" onAction="#handleChangeFile"/>
                         </HBox>
 
+
                         <HBox alignment="CENTER_LEFT" styleClass="mapping-section-header">
+
                             <VBox spacing="3.0">
                                 <Label text="Map your columns" styleClass="mapping-title"/>
                                 <Label text="Match each field to a column from your Excel file."
                                        styleClass="mapping-subtitle"/>
                             </VBox>
+
                             <Region HBox.hgrow="ALWAYS"/>
+                            
                             <VBox alignment="CENTER_RIGHT" spacing="4.0">
                                 <Label fx:id="progressLabel" styleClass="mapping-progress-label"/>
                                 <ProgressBar fx:id="progressBar" styleClass="mapping-progress-bar" progress="0"/>
                             </VBox>
+
                         </HBox>
+
 
                         <HBox styleClass="mapping-toolbar" alignment="CENTER_LEFT" spacing="10.0">
                             <Button text="  Auto-match" styleClass="btn-auto-match" onAction="#handleAutoMatch">

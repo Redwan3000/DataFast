@@ -22,7 +22,7 @@
     -fx-text-fill: #333333;
 }
 
-.runner-title-icon-wrap {
+.automation-title {
     -fx-background-color: #E8F4F2;
     -fx-background-radius: 10;
     -fx-min-width: 44;
@@ -31,17 +31,17 @@
     -fx-max-height: 44;
 }
 
-.runner-title-icon {
+.automation-title-icon {
     -fx-icon-color: #1A9F8A;
 }
 
-.runner-title {
+.automation-title-name {
     -fx-font-size: 26px;
     -fx-font-weight: bold;
     -fx-text-fill: #1A1A1A;
 }
 
-.runner-subtitle {
+.automation-title-description {
     -fx-font-size: 13px;
     -fx-text-fill: #888888;
 }
